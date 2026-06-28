@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Managed Agent CLI wrapper — loads the API key and runs cli.py.
+#
+# install.sh fills in the @@PLACEHOLDERS@@ and drops the result at the install
+# location (default ~/.local/bin/<command>). You can also edit this by hand.
+#
+# Optional passphrase guard: set PASSPHRASE below (empty = no guard).
+# Skip it for a run with:  SKIP_PASSPHRASE=1
+set -euo pipefail
+
+# --- config (filled by install.sh) ---
+APP_DIR="@@APP_DIR@@"              # where cli.py lives
+ENV_FILE="@@ENV_FILE@@"            # file that exports ANTHROPIC_API_KEY
+PYTHON_RUNNER='@@PYTHON_RUNNER@@'  # e.g. "python3" or "micromamba run -n buddy python"
+PASSPHRASE="@@PASSPHRASE@@"        # empty string = no passphrase
+export AGENT_CLI_HOME="@@AGENT_CLI_HOME@@"
+
+# --doctor / --status / --usage / --help run without the passphrase
+case "${1:-}" in
+    --doctor|--status|--usage|-h|--help) SKIP_PASSPHRASE=1 ;;
+esac
+[[ "${SKIP_PASSPHRASE:-0}" == "1" ]] && PASSPHRASE=""
+
+if [[ -n "$PASSPHRASE" ]]; then
+    printf "🔐 passphrase: "
+    read -r phrase
+    if [[ "$phrase" != "$PASSPHRASE" ]]; then
+        echo "❌ wrong passphrase — not starting."
+        exit 1
+    fi
+fi
+
+# Load the API key
+if [[ -f "$ENV_FILE" ]]; then
+    # shellcheck source=/dev/null
+    set -a; source "$ENV_FILE"; set +a
+elif [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
+    echo "Error: ANTHROPIC_API_KEY not set and env file not found: $ENV_FILE" >&2
+    exit 1
+fi
+
+exec $PYTHON_RUNNER "$APP_DIR/cli.py" "$@"

@@ -1,0 +1,13 @@
+{
+  "name": "MyAgent",
+  "model": "claude-sonnet-4-6",
+  "agent_id": "agent_xxxxxxxxxxxxxxxxxxxxxxxx",
+  "agent_version": 1,
+  "environment_id": "env_xxxxxxxxxxxxxxxxxxxxxxxx",
+  "memory_store_id": "memstore_xxxxxxxxxxxxxxxxxxxxxxxx",
+  "github_repo_url": "https://github.com/your-name/your-repo",
+  "gh_repo": "your-name/your-repo",
+  "memory_instructions": "Cross-session memory for this agent. Keep decisions, preferences, in-progress task snapshots, and explicit user rules. Do not keep secrets or ephemeral reasoning.",
+  "self_repair_verify": "python -m pytest -q",
+  "custom_skills": {}
+}
