@@ -94,16 +94,29 @@ tool.
 "token", the agent **refused**, correctly flagging it as a possible
 exfiltration / prompt-injection test — the safety guardrails work.
 
-### Recommended fix (not yet applied to the deployed agent)
+### Fix applied and re-measured (habatchLM v11 → v12)
 
-Strengthen `system_prompt.md` from a passive tool table to an active rule:
-*any path on the user's machine (home / `/tmp` / `/mnt`, "my machine",
-"locally") MUST use `local_bash`/`local_write`; the cloud sandbox is only for
-throwaway computation; never report a sandbox file op as if it happened on the
-user's machine; never claim a tool ran without actually calling it.* This ships
-in `system_prompt.example.md` already. Applying it to habatchLM means editing its
-`system_prompt.md` and re-running `setup.py` (which re-provisions the cloud agent
-to a new version) — a deliberate action, left to the operator.
+The deployed system prompt was strengthened from a passive tool table to an
+active rule: *any path on the user's machine (home / `/tmp` / `/mnt`, "my
+machine", "locally") MUST use `local_bash`/`local_write`; the cloud sandbox is
+only for throwaway computation; never report a sandbox file op as if it happened
+on the user's machine; never claim a tool ran without actually calling it.* The
+agent was re-provisioned (`update.py` → v12, same `agent_id`). The same rule
+ships in `system_prompt.example.md` for other operators.
+
+Re-running the tools tier on v12:
+
+| tier | v11 | v12 |
+|---|---|---|
+| tools overall | 0.67 | **0.83** |
+| `tool_bash_read` | 0/2 | **1/2** (+ the failing run now reasons "may be on the local WSL2 side" instead of flatly "does not exist") |
+
+So the fix moved the agent in the right direction — it now sometimes routes to
+`local_bash` and, when it doesn't, at least surfaces the local/sandbox
+distinction. It is **not** a 100% fix: with a Sonnet-class model the routing is
+stochastic and prompt guidance alone doesn't make it deterministic. A fully
+reliable fix would be tooling-level (don't expose the sandbox shell for
+user-path operations), which is a larger change left for later.
 
 ## The benchmark fixed itself first
 

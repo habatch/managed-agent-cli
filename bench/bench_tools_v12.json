@@ -1,0 +1,89 @@
+{
+  "agents": {
+    "habatchLM": {
+      "overall": 0.833,
+      "by_dim": {
+        "tools": 0.833
+      },
+      "by_tier": {
+        "tools": 0.833
+      },
+      "by_task": {
+        "tool_bash_hash": 1.0,
+        "tool_bash_read": 0.5,
+        "tool_local_write": 1.0
+      },
+      "total_cost_usd": 0.1721,
+      "avg_latency_s": 14.1,
+      "rows": [
+        {
+          "task": "tool_bash_hash",
+          "dim": "tools",
+          "score": 1.0,
+          "detail": "correct digest",
+          "latency_s": 10.2,
+          "cost_usd": 0.0635,
+          "ok": true,
+          "answer": "[tool: bash]\n実測結果 (return code 0):\n\n```\n58fb98e321f1d90b766dece38185be29af20f9e6351804c853599adc2c505018\n```\n\n`printf` で trailing newline なしの ASCII 文字列 `habatch-parity-2026` を渡し、`sha256sum` で算出した 64 文字の hex digest です。"
+        },
+        {
+          "task": "tool_bash_hash",
+          "dim": "tools",
+          "score": 1.0,
+          "detail": "correct digest",
+          "latency_s": 11.0,
+          "cost_usd": 0.0131,
+          "ok": true,
+          "answer": "[tool: bash]\n実測結果:\n\n```\n58fb98e321f1d90b766dece38185be29af20f9e6351804c853599adc2c505018\n```\n\n- 入力: `habatch-parity-2026`（trailing newline なし、`printf` 使用）\n- コマンド: `printf 'habatch-parity-2026' | sha256sum`\n- ダイジェスト長: 64 文字（SHA-256 確認済み）"
+        },
+        {
+          "task": "tool_bash_read",
+          "dim": "tools",
+          "score": 0.0,
+          "detail": "room number not read",
+          "latency_s": 17.1,
+          "cost_usd": 0.0208,
+          "ok": true,
+          "answer": "[tool: read]\nファイル `/tmp/agent_bench_tools/quarterly_review.txt` は存在しませんでした (No such file or directory)。\n\n`bash` でも確認します:\n\n[tool: bash]\nディレクトリ `/tmp/agent_bench_tools/` 自体が存在しません。\n\nファイルのパスが正確か確認してください。別のパスや別の環境 (ローカル WSL2 側など) にある可能性があります。パスを教えてもらえれば再確認します。"
+        },
+        {
+          "task": "tool_bash_read",
+          "dim": "tools",
+          "score": 1.0,
+          "detail": "read room 2027",
+          "latency_s": 16.9,
+          "cost_usd": 0.0227,
+          "ok": true,
+          "answer": "[tool: bash]\nsandbox には存在しないため、host (WSL2) 側を確認します。\n\n[local_bash] cat /tmp/agent_bench_tools/quarterly_review.txt\nファイルの内容は以下のとおりです:\n\n> \"Internal note: the quarterly review meeting is scheduled in room **2027** on the third floor.\"\n\n四半期レビューミーティングの会議室は **Room 2027**（3階）です。"
+        },
+        {
+          "task": "tool_local_write",
+          "dim": "tools",
+          "score": 1.0,
+          "detail": "file written with exact contents",
+          "latency_s": 15.4,
+          "cost_usd": 0.0267,
+          "ok": true,
+          "answer": "[local_bash] mkdir -p /tmp/agent_bench_tools\n\n[local_write] /tmp/agent_bench_tools/agent_write_probe.txt (19 chars)\n\n[local_bash] cat /tmp/agent_bench_tools/agent_write_probe.txt\n書き込み完了・確認済み。\n\n- パス: `/tmp/agent_bench_tools/agent_write_probe.txt`\n- 内容: `BENCH-WRITE-OK-731`\n- 書き込みバイト数: 19 bytes (内容 + 改行)"
+        },
+        {
+          "task": "tool_local_write",
+          "dim": "tools",
+          "score": 1.0,
+          "detail": "file written with exact contents",
+          "latency_s": 14.2,
+          "cost_usd": 0.0253,
+          "ok": true,
+          "answer": "[local_bash] mkdir -p /tmp/agent_bench_tools\n\n[local_write] /tmp/agent_bench_tools/agent_write_probe.txt (19 chars)\n\n[local_bash] cat /tmp/agent_bench_tools/agent_write_probe.txt\n書き込み完了・確認済みです。\n\n- パス: `/tmp/agent_bench_tools/agent_write_probe.txt`\n- 内容: `BENCH-WRITE-OK-731`\n- 書き込みバイト数: 19 bytes (内容 + 末尾改行)"
+        }
+      ]
+    }
+  },
+  "dims": [
+    "tools"
+  ],
+  "tiers": [
+    "tools"
+  ],
+  "wall_s": 84.7
+}
