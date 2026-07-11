@@ -1,0 +1,1218 @@
+{
+  "agents": {
+    "habatchLM": {
+      "overall": 0.994,
+      "by_dim": {
+        "analysis": 1.0,
+        "anti-hallucination": 1.0,
+        "careful-reading": 1.0,
+        "coding": 1.0,
+        "explanation": 0.9,
+        "instruction": 1.0,
+        "reasoning": 1.0
+      },
+      "by_tier": {
+        "core": 0.992,
+        "hard": 1.0
+      },
+      "by_task": {
+        "pen_notebook": 1.0,
+        "math_multistep": 1.0,
+        "modular_exp": 1.0,
+        "fill_rate": 1.0,
+        "json_only": 1.0,
+        "count_r": 1.0,
+        "word_count_8": 1.0,
+        "code_longest_run": 1.0,
+        "no_the": 1.0,
+        "false_premise": 1.0,
+        "explain_sky": 0.9,
+        "model_tradeoff": 1.0,
+        "h_cond_prob": 1.0,
+        "h_divisibility": 1.0,
+        "h_needle": 1.0,
+        "h_spiral": 1.0,
+        "h_nested_format": 1.0,
+        "h_fabricated_cite": 1.0
+      },
+      "total_cost_usd": 0.5398,
+      "avg_latency_s": 10.3,
+      "rows": [
+        {
+          "task": "pen_notebook",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 0.15, expected 0.15",
+          "latency_s": 6.8,
+          "cost_usd": 0.007,
+          "ok": true,
+          "answer": "The pen costs x dollars, the notebook costs x + 1.00 dollars.\n\nx + (x + 1.00) = 1.30  \n2x + 1.00 = 1.30  \n2x = 0.30  \nx = 0.15\n\nFINAL: 0.15"
+        },
+        {
+          "task": "pen_notebook",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 0.15, expected 0.15",
+          "latency_s": 7.0,
+          "cost_usd": 0.0071,
+          "ok": true,
+          "answer": "The pen costs $x, the notebook costs $x + $1.00.\n\nTogether: x + (x + 1.00) = 1.30  \n→ 2x + 1.00 = 1.30  \n→ 2x = 0.30  \n→ x = 0.15\n\nFINAL: 0.15"
+        },
+        {
+          "task": "math_multistep",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 22.0, expected 22.0",
+          "latency_s": 9.5,
+          "cost_usd": 0.0108,
+          "ok": true,
+          "answer": "## 計算の手順\n\n**区間 1: 18 km/h で 40 分走行**\n\n$$18 \\text{ km/h} \\times \\frac{40}{60} \\text{ h} = 18 \\times \\frac{2}{3} = 12 \\text{ km}$$\n\n**区間 2: 15 分休憩**\n\n移動距離 = 0 km\n\n**区間 3: 24 km/h で 25 分走行**\n\n$$24 \\text{ km/h} \\times \\frac{25}{60} \\text{ h} = 24 \\times \\frac{5}{12} = 10 \\text{ km}$$\n\n**合計距離**\n\n$$12 + 0 + 10 = 22 \\text{ km}$$\n\nFINAL: 22"
+        },
+        {
+          "task": "math_multistep",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 22.0, expected 22.0",
+          "latency_s": 9.8,
+          "cost_usd": 0.0108,
+          "ok": true,
+          "answer": "## Reasoning\n\n**Segment 1 — Riding at 18 km/h for 40 minutes**\n\nConvert time to hours: 40 min = 40/60 = 2/3 h\n\nDistance = 18 × 2/3 = **12 km**\n\n---\n\n**Rest — 15 minutes**\n\nNo movement, so distance = **0 km**\n\n---\n\n**Segment 2 — Riding at 24 km/h for 25 minutes**\n\nConvert time to hours: 25 min = 25/60 = 5/12 h\n\nDistance = 24 × 5/12 = 120/12 = **10 km**\n\n---\n\n**Total distance**\n\n12 + 0 + 10 = **22 km**\n\nFINAL: 22"
+        },
+        {
+          "task": "modular_exp",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 11.7,
+          "cost_usd": 0.0138,
+          "ok": true,
+          "answer": "## Solving 7^100 mod 13\n\n### Step 1 — Apply Fermat's Little Theorem\n\nSince 13 is prime and gcd(7, 13) = 1, Fermat's Little Theorem guarantees:\n\n$$7^{12} \\equiv 1 \\pmod{13}$$\n\n### Step 2 — Reduce the exponent\n\nDivide 100 by 12:\n\n$$100 = 12 \\times 8 + 4$$\n\nSo the exponent reduces to:\n\n$$7^{100} = (7^{12})^8 \\times 7^4 \\equiv 1^8 \\times 7^4 \\equiv 7^4 \\pmod{13}$$\n\n### Step 3 — Compute 7^4 mod 13\n\n$$7^2 = 49 = 3 \\times 13 + 10 \\implies 7^2 \\equiv 10 \\equiv -3 \\pmod{13}$$\n\n$$7^4 = (7^2)^2 \\equiv (-3)^2 = 9 \\pmod{13}$$\n\n### Verification\n\n| Power | Value | mod 13 |\n|---|---|---|\n| 7^1 | 7 | 7 |\n| 7^2"
+        },
+        {
+          "task": "modular_exp",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 11.9,
+          "cost_usd": 0.0136,
+          "ok": true,
+          "answer": "## Solving 7^100 mod 13\n\n**Step 1 — Apply Fermat's Little Theorem**\n\nSince 13 is prime and gcd(7, 13) = 1, Fermat's Little Theorem gives:\n\n$$7^{12} \\equiv 1 \\pmod{13}$$\n\n**Step 2 — Reduce the exponent**\n\nDivide 100 by 12:\n\n$$100 = 12 \\times 8 + 4$$\n\nSo:\n\n$$7^{100} = (7^{12})^8 \\times 7^4 \\equiv 1^8 \\times 7^4 \\equiv 7^4 \\pmod{13}$$\n\n**Step 3 — Compute 7^4 mod 13**\n\n$$7^2 = 49 = 3 \\times 13 + 10 \\implies 7^2 \\equiv 10 \\equiv -3 \\pmod{13}$$\n\n$$7^4 = (7^2)^2 \\equiv (-3)^2 = 9 \\pmod{13}$$\n\n**Verification**\n\n| Power | Value mod 13 |\n|-------|-------------|\n| 7^1 | 7 |\n| 7^2 | 10 |\n| 7^4 | 9 |\n| 7^1"
+        },
+        {
+          "task": "fill_rate",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 54.0, expected 54.0",
+          "latency_s": 6.7,
+          "cost_usd": 0.0091,
+          "ok": true,
+          "answer": "## 解法\n\n**レートを求める**\n\n$$\\text{流量} = \\frac{3 \\text{ L}}{20 \\text{ s}} = 0.15 \\text{ L/s}$$\n\n**6分を秒に変換**\n\n$$6 \\text{ min} \\times 60 \\text{ s/min} = 360 \\text{ s}$$\n\n**合計量を計算**\n\n$$0.15 \\text{ L/s} \\times 360 \\text{ s} = 54 \\text{ L}$$\n\nFINAL: 54"
+        },
+        {
+          "task": "fill_rate",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 54.0, expected 54.0",
+          "latency_s": 7.2,
+          "cost_usd": 0.0091,
+          "ok": true,
+          "answer": "## 解法\n\n**流量を求める**\n\n$$\\text{流量} = \\frac{3 \\text{ L}}{20 \\text{ s}} = 0.15 \\text{ L/s}$$\n\n**6分を秒に換算**\n\n$$6 \\text{ min} \\times 60 \\text{ s/min} = 360 \\text{ s}$$\n\n**6分間の総量**\n\n$$0.15 \\text{ L/s} \\times 360 \\text{ s} = 54 \\text{ L}$$\n\nFINAL: 54"
+        },
+        {
+          "task": "json_only",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "pure JSON, correct",
+          "latency_s": 4.6,
+          "cost_usd": 0.006,
+          "ok": true,
+          "answer": "{\"sum\": 13, \"product\": 42}"
+        },
+        {
+          "task": "json_only",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "pure JSON, correct",
+          "latency_s": 4.5,
+          "cost_usd": 0.006,
+          "ok": true,
+          "answer": "{\"sum\": 13, \"product\": 42}"
+        },
+        {
+          "task": "count_r",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 10.7,
+          "cost_usd": 0.0148,
+          "ok": true,
+          "answer": "## Character-by-character breakdown\n\n**\"strawberry\"**\n\n| Position | Char | 'r'? |\n|----------|------|------|\n| 1 | s | |\n| 2 | t | |\n| 3 | r | ✅ |\n| 4 | a | |\n| 5 | w | |\n| 6 | b | |\n| 7 | e | |\n| 8 | r | ✅ |\n| 9 | r | ✅ |\n| 10 | y | |\n\nSubtotal: **3**\n\n---\n\n**\"farmer\"**\n\n| Position | Char | 'r'? |\n|----------|------|------|\n| 1 | f | |\n| 2 | a | |\n| 3 | r | ✅ |\n| 4 | m | |\n| 5 | e | |\n| 6 | r | ✅ |\n\nSubtotal: **2**\n\n---\n\n**\"refrigerator\"**\n\n| Position | Char | 'r'? |\n|----------|------|------|\n| 1 | r | ✅ |\n| 2 | e | |\n| 3 | f | |\n| 4 | r | ✅ |\n| 5 | i | |\n| 6 | g | |\n| 7 | e | |\n| 8 | r | ✅ "
+        },
+        {
+          "task": "word_count_8",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "8 words",
+          "latency_s": 6.0,
+          "cost_usd": 0.0059,
+          "ok": true,
+          "answer": "The sun rises slowly over the quiet hills."
+        },
+        {
+          "task": "count_r",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 10.6,
+          "cost_usd": 0.0144,
+          "ok": true,
+          "answer": "## Character-by-character breakdown\n\n**\"strawberry\"**\n\n| # | char | r? |\n|---|------|----|\n| 1 | s | |\n| 2 | t | |\n| 3 | r | ✅ |\n| 4 | a | |\n| 5 | w | |\n| 6 | b | |\n| 7 | e | |\n| 8 | r | ✅ |\n| 9 | r | ✅ |\n| 10 | y | |\n\n→ 3 r's\n\n---\n\n**\"farmer\"**\n\n| # | char | r? |\n|---|------|----|\n| 1 | f | |\n| 2 | a | |\n| 3 | r | ✅ |\n| 4 | m | |\n| 5 | e | |\n| 6 | r | ✅ |\n\n→ 2 r's\n\n---\n\n**\"refrigerator\"**\n\n| # | char | r? |\n|---|------|----|\n| 1 | r | ✅ |\n| 2 | e | |\n| 3 | f | |\n| 4 | r | ✅ |\n| 5 | i | |\n| 6 | g | |\n| 7 | e | |\n| 8 | r | ✅ |\n| 9 | a | |\n| 10 | t | |\n| 11 | o | |\n| 12 | r | ✅ |\n\n→ 4 r's\n\n---\n\n"
+        },
+        {
+          "task": "word_count_8",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "8 words",
+          "latency_s": 8.0,
+          "cost_usd": 0.0073,
+          "ok": true,
+          "answer": "The quick brown fox jumps over the fence."
+        },
+        {
+          "task": "code_longest_run",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 5.6,
+          "cost_usd": 0.0076,
+          "ok": true,
+          "answer": "```python\ndef longest_run(s: str) -> int:\n    if not s:\n        return 0\n    max_run = 1\n    current_run = 1\n    for i in range(1, len(s)):\n        if s[i] == s[i - 1]:\n            current_run += 1\n            if current_run > max_run:\n                max_run = current_run\n        else:\n            current_run = 1\n    return max_run\n```"
+        },
+        {
+          "task": "no_the",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "no 'the', >=2 sentences",
+          "latency_s": 9.7,
+          "cost_usd": 0.009,
+          "ok": true,
+          "answer": "Golden light spills across a vast ocean horizon as dawn breaks, painting waves in shades of amber and rose. Soft clouds catch fire with color, reflecting brilliance onto rippling water below. A new day emerges, silent and luminous, as sunlight stretches endlessly toward shore."
+        },
+        {
+          "task": "code_longest_run",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 5.5,
+          "cost_usd": 0.0061,
+          "ok": true,
+          "answer": "```python\ndef longest_run(s: str) -> int:\n    if not s:\n        return 0\n    max_run = 1\n    current_run = 1\n    for i in range(1, len(s)):\n        if s[i] == s[i - 1]:\n            current_run += 1\n            if current_run > max_run:\n                max_run = current_run\n        else:\n            current_run = 1\n    return max_run\n```"
+        },
+        {
+          "task": "no_the",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "no 'the', >=2 sentences",
+          "latency_s": 12.9,
+          "cost_usd": 0.0153,
+          "ok": true,
+          "answer": "Golden light spills across a vast, shimmering ocean as dawn breaks on a new day. Waves catch each ray and scatter it into countless sparkling fragments, painting water in shades of amber and rose. A brilliant sun climbs slowly above a distant horizon, casting long, warm reflections that ripple and dance with every passing wave."
+        },
+        {
+          "task": "false_premise",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "Correctly refutes the false premise, identifies the 1921 prize and cites the photoelectric effect as the stated reason.",
+          "latency_s": 12.0,
+          "cost_usd": 0.0116,
+          "ok": true,
+          "answer": "There is a common misconception embedded in this question worth correcting directly:\n\n**Einstein did not win the Nobel Prize for the theory of general relativity.**\n\nHe was awarded the **1921 Nobel Prize in Physics** (announced and presented in **1922**, as the 1921 prize had been withheld that year). The committee's stated reason was:\n\n> *\"for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect.\"*\n\nThe photoelectric effect — the finding that light ejects electrons from a surface in discrete quanta — was the cited basis, not general rela"
+        },
+        {
+          "task": "false_premise",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "Correctly rejects the false premise, states 1921, and names the photoelectric effect as the actual citation.",
+          "latency_s": 12.3,
+          "cost_usd": 0.0112,
+          "ok": true,
+          "answer": "This question contains a common misconception worth correcting directly.\n\n**Einstein did not win the Nobel Prize for general relativity.**\n\nHere are the actual facts:\n\n- **Year awarded:** 1921 (though the prize was actually *delivered* in 1922, as it was held over from the previous year)\n- **Stated reason:** \"for his discovery of the law of the photoelectric effect\"\n- **Work recognized:** His 1905 paper explaining the photoelectric effect, which was foundational to quantum theory\n\nThe Nobel Committee notably **never awarded Einstein a prize for general relativity** (1915) or special relativity"
+        },
+        {
+          "task": "explain_sky",
+          "dim": "explanation",
+          "score": 0.9,
+          "detail": "Correct Rayleigh scattering physics, age-appropriate, and exactly three sentences, though answered in Japanese rather than English.",
+          "latency_s": 8.3,
+          "cost_usd": 0.008,
+          "ok": true,
+          "answer": "太陽の光は、虹のようにたくさんの色が混ざり合ってできているんだ。その光が地球の空気の中に入ると、青い光だけが小さな空気の粒にぶつかってあちこちに飛び散る性質を持っているんだよ。だから空を見上げると、どこを向いても青い光が目に届いて、空全体が青く見えるんだ！"
+        },
+        {
+          "task": "explain_sky",
+          "dim": "explanation",
+          "score": 0.9,
+          "detail": "Correct Rayleigh scattering physics, age-appropriate, and exactly three sentences, though answered in Japanese rather than presumably expected English.",
+          "latency_s": 8.4,
+          "cost_usd": 0.008,
+          "ok": true,
+          "answer": "太陽の光は、虹のようにたくさんの色が混ざっています。その光が地球の空気の中に入ってくると、青い色だけが小さな空気の粒にぶつかって、あちこちに飛び散りやすい性質があります。だから空を見上げると、どこを見ても青い光が目に飛び込んできて、空全体が青く見えるのです。"
+        },
+        {
+          "task": "model_tradeoff",
+          "dim": "analysis",
+          "score": 1.0,
+          "detail": "Correctly identifies the latency/cost vs reasoning-quality/context axes and provides a specific, apt example (inline autocomplete needing sub-50ms response with only local context).",
+          "latency_s": 15.3,
+          "cost_usd": 0.0119,
+          "ok": true,
+          "answer": "小さいモデルはレイテンシが低くトークンコストが安い反面、複雑な推論・長いコンテキスト追跡・マルチファイルの依存関係把握が苦手で、微妙なバグの原因特定や設計レベルのリファクタリングでは出力品質が落ちやすい。大きいモデルはその逆で、精度と文脈理解に優れるが、応答に数秒かかりインタラクティブな編集フローを阻害し、API コストも跳ね上がる。核心的なトレードオフは「スループット・コスト」対「推論深度・コンテキスト長」であり、タスクの複雑さに応じてどちらを優先するかが変わる。小さいモデルが明確に優位な状況として、**インライン補完 (autocomplete)** が挙げられる — ユーザーがキーストロークのたびに候補を期待する環境では 50ms 以内の応答が必須であり、補完候補は直近数行のローカルコンテキストだけで十分なため、大きなモデルの深い推論能力はほぼ無駄になる。"
+        },
+        {
+          "task": "model_tradeoff",
+          "dim": "analysis",
+          "score": 1.0,
+          "detail": "Correctly names latency/cost vs reasoning quality axes and gives a specific, well-justified inline autocomplete example favoring the small model.",
+          "latency_s": 15.8,
+          "cost_usd": 0.0107,
+          "ok": true,
+          "answer": "小さく速いモデルは **レイテンシが低くスループットが高い**が、複雑な推論・長いコンテキスト理解・多段階の設計判断では精度が落ちる。大きく遅いモデルは**品質と信頼性が高い**が、応答待ちがストレスになり、インタラクティブな開発フローを阻害する。コーディングアシスタントの文脈では、この差は「補完の速度感」と「アーキテクチャレベルの正確さ」の二軸で現れる。さらにコストも直結するため、用途に応じてモデルを使い分ける tiered 設計が実用上の正解になることが多い。\n\n**小さいモデルが明確に優る具体的状況**: インライン補完 (GitHub Copilot の ghost text のような、キーストロークごとに発火するリアルタイム補完) では、200–400ms 以内に返答が来ないとユーザは補完を無視して自分でタイプし終えてしまう。この場面では 7B–13B 規模のモデルをローカルまたはエッジで動かす方が、GPT-4 クラスを API 越しに叩くより**体験として明らかに勝る**。"
+        },
+        {
+          "task": "h_cond_prob",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "2/11 correct",
+          "latency_s": 11.2,
+          "cost_usd": 0.0146,
+          "ok": true,
+          "answer": "## Setting Up the Conditional Probability\n\n$$P(\\text{sum}=7 \\mid \\text{at least one } 4) = \\frac{P(\\text{sum}=7 \\cap \\text{at least one }4)}{P(\\text{at least one }4)}$$\n\n---\n\n## Counting the Sample Space\n\n**Event A — at least one die shows 4** (11 outcomes):\n\n| Die 1 = 4 | Die 2 = 4 |\n|---|---|\n| (4,1), (4,2), (4,3), (4,4), (4,5), (4,6) | (1,4), (2,4), (3,4), (5,4), (6,4) |\n\nTotal: **11 outcomes** (avoiding double-counting (4,4))\n\n---\n\n**Event A ∩ B — at least one 4 AND sum = 7:**\n\nAll pairs summing to 7: (1,6), (2,5), **(3,4)**, **(4,3)**, (5,2), (6,1)\n\nOnly **(3,4)** and **(4,3)** contain a "
+        },
+        {
+          "task": "h_divisibility",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 266.0, expected 266.0",
+          "latency_s": 14.7,
+          "cost_usd": 0.0176,
+          "ok": true,
+          "answer": "## Reasoning: Inclusion-Exclusion\n\n**Step 1 — Count divisible by each prime**\n\n| Divisor | Count = ⌊1000/d⌋ |\n|---------|-----------------|\n| 2 | 500 |\n| 3 | 333 |\n| 5 | 200 |\n\n**Step 2 — Subtract double-counted pairs**\n\n| Divisor | Count = ⌊1000/d⌋ |\n|---------|-----------------|\n| 6 (2∩3) | 166 |\n| 10 (2∩5) | 100 |\n| 15 (3∩5) | 66 |\n\n**Step 3 — Add back triple-counted intersection**\n\n| Divisor | Count = ⌊1000/d⌋ |\n|---------|-----------------|\n| 30 (2∩3∩5) | 33 |\n\n**Step 4 — Inclusion-Exclusion total divisible by at least one of {2, 3, 5}**\n\n```\n|A ∪ B ∪ C| = 500 + 333 + 200 − 166 − 100 − 66"
+        },
+        {
+          "task": "h_cond_prob",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "2/11 correct",
+          "latency_s": 13.1,
+          "cost_usd": 0.0153,
+          "ok": true,
+          "answer": "## 解法\n\n### 標本空間の設定\n\n2つのサイコロの全事象: **36通り**\n\n---\n\n### 事象の定義\n\n| 事象 | 内容 |\n|---|---|\n| B | 少なくとも1つが4 |\n| A ∩ B | 合計が7 かつ 少なくとも1つが4 |\n\n---\n\n### 事象 B の数え上げ\n\n「少なくとも1つが4」の場合:\n\n- ダイス1が4: (4,1),(4,2),(4,3),(4,4),(4,5),(4,6) → 6通り\n- ダイス2が4: (1,4),(2,4),(3,4),(4,4),(5,4),(6,4) → 6通り\n- 重複 (4,4): 1通り\n\n$$|B| = 6 + 6 - 1 = 11$$\n\n---\n\n### 事象 A ∩ B の数え上げ\n\n「合計が7」かつ「少なくとも1つが4」:\n\n4が絡んで合計7にするには、もう一方が **3** である必要がある。\n\n$$A \\cap B = \\{(4,3),\\ (3,4)\\} \\Rightarrow |A \\cap B| = 2$$\n\n---\n\n### 条件付き確率の計算\n\n$$P(A \\mid B) = \\frac{|A \\cap B|}{|B|} = \\frac{2}{11}$$\n\n---\n\n$$\\boxed{\\dfrac{2}{11}}$$"
+        },
+        {
+          "task": "h_divisibility",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 266.0, expected 266.0",
+          "latency_s": 17.5,
+          "cost_usd": 0.0216,
+          "ok": true,
+          "answer": "## Reasoning via Inclusion-Exclusion\n\n**Count integers divisible by each prime (floors):**\n\n| Divisor | Count |\n|---------|-------|\n| 2 | ⌊1000/2⌋ = 500 |\n| 3 | ⌊1000/3⌋ = 333 |\n| 5 | ⌊1000/5⌋ = 200 |\n| 6 (=2·3) | ⌊1000/6⌋ = 166 |\n| 10 (=2·5) | ⌊1000/10⌋ = 100 |\n| 15 (=3·5) | ⌊1000/15⌋ = 66 |\n| 30 (=2·3·5) | ⌊1000/30⌋ = 33 |\n\n**Apply inclusion-exclusion:**\n\n$$|A \\cup B \\cup C| = 500 + 333 + 200 - 166 - 100 - 66 + 33 = 734$$\n\n**Integers divisible by none of 2, 3, 5:**\n\n$$1000 - 734 = 266$$\n\n---\n\n**Cross-check via φ(30):**\n\nNumbers coprime to 30 = coprime to {2, 3, 5}. In every block of 30 conse"
+        },
+        {
+          "task": "h_needle",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 8.0, expected 8.0",
+          "latency_s": 9.9,
+          "cost_usd": 0.01,
+          "ok": true,
+          "answer": "## Reasoning\n\n**Identifying what counts:** The question asks for station stops only. A signal hold is explicitly stated to be \"not a station,\" so it is excluded. The terminus is explicitly stated to count as a stop.\n\n**Counting:**\n- First leg: **4** station stops\n- Signal hold: 0 (not a station)\n- Second leg: **3** station stops\n- Terminus arrival: **1** station stop (per the question's instruction)\n\n**Irrelevant detail:** The replacement bus capacity (52 people) has no bearing on the count — it's a red herring.\n\n**Total: 4 + 3 + 1 = 8**\n\nFINAL: 8"
+        },
+        {
+          "task": "h_needle",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 8.0, expected 8.0",
+          "latency_s": 8.4,
+          "cost_usd": 0.0083,
+          "ok": true,
+          "answer": "## Reasoning\n\nThe question asks specifically about **station stops**, and clarifies that the terminus should be counted as one.\n\nWorking through the sequence:\n\n1. **4 station stops** — explicitly stated\n2. **Signal hold** — explicitly stated as *not a station*, so this does not count\n3. **3 more station stops** — explicitly stated\n4. **Terminus arrival** — the question instructs us to count this as a stop, and a terminus is a station\n\nRunning total: 4 + 3 + 1 = **8**\n\nThe replacement bus capacity (52 seats) is irrelevant to the count — it's a red herring.\n\nFINAL: 8"
+        },
+        {
+          "task": "h_spiral",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 6.7,
+          "cost_usd": 0.0095,
+          "ok": true,
+          "answer": "```python\ndef spiral_order(matrix: list[list[int]]) -> list[int]:\n    if not matrix or not matrix[0]:\n        return []\n\n    result = []\n    top, bottom, left, right = 0, len(matrix) - 1, 0, len(matrix[0]) - 1\n\n    while top <= bottom and left <= right:\n        for col in range(left, right + 1):\n            result.append(matrix[top][col])\n        top += 1\n\n        for row in range(top, bottom + 1):\n            result.append(matrix[row][right])\n        right -= 1\n\n        if top <= bottom:\n            for col in range(right, left - 1, -1):\n                result.append(matrix[bottom][col])\n    "
+        },
+        {
+          "task": "h_nested_format",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "L1=True L2=True L3=True",
+          "latency_s": 9.9,
+          "cost_usd": 0.0117,
+          "ok": true,
+          "answer": "The sun rises every day\nlevel\n5"
+        },
+        {
+          "task": "h_nested_format",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "L1=True L2=True L3=True",
+          "latency_s": 9.9,
+          "cost_usd": 0.0112,
+          "ok": true,
+          "answer": "The quick brown fox jumps\nracecar\n7"
+        },
+        {
+          "task": "h_spiral",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 6.9,
+          "cost_usd": 0.0079,
+          "ok": true,
+          "answer": "```python\ndef spiral_order(matrix: list[list[int]]) -> list[int]:\n    if not matrix or not matrix[0]:\n        return []\n\n    result = []\n    top, bottom, left, right = 0, len(matrix) - 1, 0, len(matrix[0]) - 1\n\n    while top <= bottom and left <= right:\n        for col in range(left, right + 1):\n            result.append(matrix[top][col])\n        top += 1\n\n        for row in range(top, bottom + 1):\n            result.append(matrix[row][right])\n        right -= 1\n\n        if top <= bottom:\n            for col in range(right, left - 1, -1):\n                result.append(matrix[bottom][col])\n    "
+        },
+        {
+          "task": "h_fabricated_cite",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "The candidate correctly declines to fabricate, states the concept cannot be verified and likely does not exist, and appropriately mentions the real Masami Nakagawa of the PMNS matrix.",
+          "latency_s": 19.2,
+          "cost_usd": 0.1045,
+          "ok": true,
+          "answer": "[tool: web_search]\n\n[tool: web_search]\n「Nakagawa resonance limit」および物理学者「Hidetoshi Nakagawa」がその概念を提唱したという記録は、複数の検索でも確認できませんでした。\n\n**結論: この情報は確認できません (存在しない可能性が高い)**\n\n理由を率直に述べます:\n\n- \"Nakagawa resonance limit\" というフレーズ自体が学術データベースや物理学文献に存在しない\n- \"Hidetoshi Nakagawa\" という物理学者によるそうした提唱論文も見当たらない\n- 著名な \"Nakagawa\" が関わる物理学上の概念としては、**MNS/PMNS 行列 (Maki–Nakagawa–Sakata matrix)** の Masami Nakagawa が知られているが、これは「resonance limit」とは別物\n\n**これは hallucination (誤情報) のリスクが高い質問です。** 存在しない論文のタイトルや年号を「それらしく」捏造することはしません。\n\nもし「Nakagawa resonance limit」に関する出典 (論文 DOI、書籍名、文脈) をお持ちであれば共有してください。そちらを元に調査します。"
+        },
+        {
+          "task": "h_fabricated_cite",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "The candidate declines to fabricate a title/year, states it cannot verify the concept, and notes it likely doesn't exist, fully matching the rubric.",
+          "latency_s": 21.2,
+          "cost_usd": 0.0725,
+          "ok": true,
+          "answer": "[tool: web_search]\n\n[tool: web_search]\n検索結果に「Nakagawa resonance limit」も「Hidetoshi Nakagawa (物理学者)」に関する該当情報が一切見つかりませんでした。\n\n**この質問にはお答えできません。**\n\n「Nakagawa resonance limit」および「それを提唱した物理学者 Hidetoshi Nakagawa」というコンセプトは、私の学習データにも今回の Web 検索結果にも存在を確認できません。\n\n考えられる可能性:\n\n| ケース | 内容 |\n|---|---|\n| **造語・架空の概念** | 「Nakagawa resonance limit」自体が実在しない可能性が高い |\n| **表記ゆれ** | 別の物理学者・別の概念名の誤記・混同の可能性 |\n| **極めてニッチな領域** | 公開 Web に情報がほぼ存在しない超専門領域の可能性 (ただし可能性は低い) |\n\n存在しない論文の「正確なタイトルと出版年」を答えることは、**hallucination (でたらめな情報の生成)** になるため、それは行いません。\n\n---\n\nもし意図した概念があるなら、以下を教えていただければ調べます:\n\n- 正確な人物名のスペル\n- 関連する物理分野 (原子核物理、素粒子、凝縮系など)\n"
+        }
+      ]
+    },
+    "raw-sonnet46": {
+      "overall": 0.982,
+      "by_dim": {
+        "analysis": 1.0,
+        "anti-hallucination": 1.0,
+        "careful-reading": 1.0,
+        "coding": 1.0,
+        "explanation": 0.85,
+        "instruction": 0.958,
+        "reasoning": 1.0
+      },
+      "by_tier": {
+        "core": 0.988,
+        "hard": 0.972
+      },
+      "by_task": {
+        "math_multistep": 1.0,
+        "modular_exp": 1.0,
+        "pen_notebook": 1.0,
+        "fill_rate": 1.0,
+        "json_only": 1.0,
+        "word_count_8": 1.0,
+        "count_r": 1.0,
+        "no_the": 1.0,
+        "code_longest_run": 1.0,
+        "false_premise": 1.0,
+        "explain_sky": 0.85,
+        "model_tradeoff": 1.0,
+        "h_cond_prob": 1.0,
+        "h_divisibility": 1.0,
+        "h_nested_format": 0.833,
+        "h_needle": 1.0,
+        "h_spiral": 1.0,
+        "h_fabricated_cite": 1.0
+      },
+      "total_cost_usd": 0.1211,
+      "avg_latency_s": 4.2,
+      "rows": [
+        {
+          "task": "math_multistep",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 22.0, expected 22.0",
+          "latency_s": 3.6,
+          "cost_usd": 0.003468,
+          "ok": true,
+          "answer": "## Setting Up the Problem\n\nI need to find the total distance covered during the riding portions (the rest period covers no distance).\n\n## Calculating Each Riding Segment\n\n**First segment:**\n- Speed: 18 km/h\n- Time: 40 minutes = 40/60 hours = 2/3 hours\n- Distance = Speed × Time = 18 × (2/3) = **12 km**\n\n**Rest period:**\n- 15 minutes of rest\n- Distance = 0 km\n\n**Second segment:**\n- Speed: 24 km/h\n- Time: 25 minutes = 25/60 hours = 5/12 hours\n- Distance = Speed × Time = 24 × (5/12) = 120/12 = **10 km**\n\n## Total Distance\n\nTotal distance = 12 + 0 + 10 = **22 km**\n\nFINAL: 22"
+        },
+        {
+          "task": "math_multistep",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 22.0, expected 22.0",
+          "latency_s": 3.5,
+          "cost_usd": 0.003333,
+          "ok": true,
+          "answer": "## Solving the Problem\n\n### Segment 1: First Ride\n- Speed: 18 km/h\n- Time: 40 minutes = 40/60 hours = 2/3 hours\n\nDistance = Speed × Time = 18 × (2/3) = **12 km**\n\n### Segment 2: Rest\n- Time: 15 minutes\n- Distance covered: **0 km** (she's resting, not moving)\n\n### Segment 3: Second Ride\n- Speed: 24 km/h\n- Time: 25 minutes = 25/60 hours = 5/12 hours\n\nDistance = Speed × Time = 24 × (5/12) = 120/12 = **10 km**\n\n### Total Distance\nTotal = 12 + 0 + 10 = **22 km**\n\nFINAL: 22"
+        },
+        {
+          "task": "modular_exp",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 4.2,
+          "cost_usd": 0.005274,
+          "ok": true,
+          "answer": "I need to find 7^100 mod 13.\n\n## Using Fermat's Little Theorem\n\nSince 13 is prime and gcd(7, 13) = 1, Fermat's Little Theorem tells us:\n7^12 ≡ 1 (mod 13)\n\n## Reducing the Exponent\n\nI need to express 100 in terms of 12:\n100 = 12 × 8 + 4\n\nSo: 7^100 = 7^(12×8 + 4) = (7^12)^8 × 7^4\n\n## Calculating\n\nSince 7^12 ≡ 1 (mod 13):\n7^100 ≡ 1^8 × 7^4 ≡ 7^4 (mod 13)\n\nNow compute 7^4:\n- 7^2 = 49 = 3 × 13 + 10, so 7^2 ≡ 10 (mod 13)\n- 7^4 = (7^2)^2 ≡ 10^2 = 100 (mod 13)\n- 100 = 7 × 13 + 9, so 100 ≡ 9 (mod 13)\n\n## Answer\n\n7^100 ≡ 9 (mod 13)\n\nFINAL: 9"
+        },
+        {
+          "task": "pen_notebook",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 0.15, expected 0.15",
+          "latency_s": 3.0,
+          "cost_usd": 0.003387,
+          "ok": true,
+          "answer": "## Reasoning\n\nLet me define variables:\n- Let p = cost of the pen (in dollars)\n- Let n = cost of the notebook (in dollars)\n\n**Setting up equations:**\n\n1. Together they cost $1.30: n + p = 1.30\n2. The notebook costs $1.00 more than the pen: n = p + 1.00\n\n**Substituting equation 2 into equation 1:**\n\n(p + 1.00) + p = 1.30\n\n2p + 1.00 = 1.30\n\n2p = 0.30\n\np = 0.15\n\n**Verification:**\n- Pen = $0.15\n- Notebook = $0.15 + $1.00 = $1.15\n- Total = $0.15 + $1.15 = $1.30 ✓\n\nFINAL: 0.15"
+        },
+        {
+          "task": "fill_rate",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 54.0, expected 54.0",
+          "latency_s": 2.5,
+          "cost_usd": 0.002301,
+          "ok": true,
+          "answer": "## Reasoning\n\n**Step 1: Find the rate of the faucet**\n\nThe faucet fills 3 liters in 20 seconds.\n\nRate = 3 liters ÷ 20 seconds = 0.15 liters per second\n\n**Step 2: Convert 6 minutes to seconds**\n\n6 minutes × 60 seconds/minute = 360 seconds\n\n**Step 3: Calculate total liters delivered**\n\nTotal liters = Rate × Time = 0.15 liters/second × 360 seconds = 54 liters\n\nFINAL: 54"
+        },
+        {
+          "task": "modular_exp",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 6.5,
+          "cost_usd": 0.007254,
+          "ok": true,
+          "answer": "## Finding 7^100 mod 13\n\nI'll use Fermat's Little Theorem and pattern recognition.\n\n### Fermat's Little Theorem\nSince 13 is prime and gcd(7,13) = 1, Fermat's Little Theorem tells us:\n$$7^{12} \\equiv 1 \\pmod{13}$$\n\n### Applying to 7^100\n\nI need to express 100 in terms of the cycle length 12:\n$$100 = 12 \\times 8 + 4$$\n\nSo:\n$$7^{100} = 7^{12 \\times 8 + 4} = (7^{12})^8 \\times 7^4$$\n\nSince $7^{12} \\equiv 1 \\pmod{13}$:\n$$7^{100} \\equiv 1^8 \\times 7^4 \\equiv 7^4 \\pmod{13}$$\n\n### Computing 7^4 mod 13\n\n**Step 1:** $7^2 = 49$\n$$49 = 3 \\times 13 + 10 \\implies 49 \\equiv 10 \\pmod{13}$$\n\n**Step 2:** $7^4 = "
+        },
+        {
+          "task": "pen_notebook",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 0.15, expected 0.15",
+          "latency_s": 3.4,
+          "cost_usd": 0.003582,
+          "ok": true,
+          "answer": "## Reasoning\n\nLet me define variables:\n- Let p = cost of pen in dollars\n- Let n = cost of notebook in dollars\n\n**Setting up equations:**\n\n1. Total cost: n + p = 1.30\n2. Notebook costs $1.00 more than pen: n = p + 1.00\n\n**Substituting equation 2 into equation 1:**\n\n(p + 1.00) + p = 1.30\n\n2p + 1.00 = 1.30\n\n2p = 0.30\n\np = 0.15\n\n**Verification:**\n- Pen = $0.15\n- Notebook = $0.15 + $1.00 = $1.15\n- Total = $0.15 + $1.15 = $1.30 ✓\n- Difference = $1.15 - $0.15 = $1.00 ✓\n\nFINAL: 0.15"
+        },
+        {
+          "task": "fill_rate",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 54.0, expected 54.0",
+          "latency_s": 2.4,
+          "cost_usd": 0.002301,
+          "ok": true,
+          "answer": "## Reasoning\n\n**Step 1: Find the rate of the faucet**\n\nThe faucet fills 3 liters in 20 seconds.\n\nRate = 3 liters ÷ 20 seconds = 0.15 liters per second\n\n**Step 2: Convert 6 minutes to seconds**\n\n6 minutes × 60 seconds/minute = 360 seconds\n\n**Step 3: Calculate total liters delivered**\n\nTotal liters = Rate × Time = 0.15 liters/second × 360 seconds = 54 liters\n\nFINAL: 54"
+        },
+        {
+          "task": "json_only",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "pure JSON, correct",
+          "latency_s": 1.0,
+          "cost_usd": 0.000375,
+          "ok": true,
+          "answer": "{\"sum\": 13, \"product\": 42}"
+        },
+        {
+          "task": "json_only",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "pure JSON, correct",
+          "latency_s": 1.1,
+          "cost_usd": 0.000375,
+          "ok": true,
+          "answer": "{\"sum\": 13, \"product\": 42}"
+        },
+        {
+          "task": "word_count_8",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "8 words",
+          "latency_s": 1.6,
+          "cost_usd": 0.000318,
+          "ok": true,
+          "answer": "The cat sat quietly on the warm windowsill."
+        },
+        {
+          "task": "count_r",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 3.5,
+          "cost_usd": 0.003867,
+          "ok": true,
+          "answer": "I'll go through each word carefully, character by character.\n\n**Word 1: 'strawberry'**\ns - t - r - a - w - b - e - r - r - y\n\n- Position 3: r ✓\n- Position 8: r ✓\n- Position 9: r ✓\n\nCount: 3 r's\n\n**Word 2: 'farmer'**\nf - a - r - m - e - r\n\n- Position 3: r ✓\n- Position 6: r ✓\n\nCount: 2 r's\n\n**Word 3: 'refrigerator'**\nr - e - f - r - i - g - e - r - a - t - o - r\n\n- Position 1: r ✓\n- Position 4: r ✓\n- Position 8: r ✓\n- Position 12: r ✓\n\nCount: 4 r's\n\n**Total: 3 + 2 + 4 = 9**\n\nFINAL: 9"
+        },
+        {
+          "task": "word_count_8",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "8 words",
+          "latency_s": 1.7,
+          "cost_usd": 0.000288,
+          "ok": true,
+          "answer": "The sun sets slowly over the quiet hills."
+        },
+        {
+          "task": "count_r",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 3.6,
+          "cost_usd": 0.003867,
+          "ok": true,
+          "answer": "I'll go through each word carefully, character by character.\n\n**Word 1: 'strawberry'**\ns - t - r - a - w - b - e - r - r - y\n\n- Position 3: r ✓\n- Position 8: r ✓\n- Position 9: r ✓\n\nCount: 3 r's\n\n**Word 2: 'farmer'**\nf - a - r - m - e - r\n\n- Position 3: r ✓\n- Position 6: r ✓\n\nCount: 2 r's\n\n**Word 3: 'refrigerator'**\nr - e - f - r - i - g - e - r - a - t - o - r\n\n- Position 1: r ✓\n- Position 4: r ✓\n- Position 8: r ✓\n- Position 12: r ✓\n\nCount: 4 r's\n\n**Total: 3 + 2 + 4 = 9**\n\nFINAL: 9"
+        },
+        {
+          "task": "no_the",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "no 'the', >=2 sentences",
+          "latency_s": 4.9,
+          "cost_usd": 0.001275,
+          "ok": true,
+          "answer": "Dawn breaks as golden light spills across a vast, shimmering ocean, painting waves in shades of amber and rose. Brilliant hues of orange and pink bleed into a softening sky, while gentle surf catches each fleeting ray. A new day awakens in breathtaking silence, warmth slowly chasing away cool night air."
+        },
+        {
+          "task": "no_the",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "no 'the', >=2 sentences",
+          "latency_s": 4.5,
+          "cost_usd": 0.00126,
+          "ok": true,
+          "answer": "Golden light spills across a vast, dark ocean as dawn breaks, painting rippling waves in shades of amber and rose. Soft clouds catch fire with brilliant orange hues, reflecting their glow onto a shimmering, endless sea. A new day emerges slowly, casting long rays of warmth over calm, breathtaking waters."
+        },
+        {
+          "task": "code_longest_run",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 2.0,
+          "cost_usd": 0.001992,
+          "ok": true,
+          "answer": "```python\ndef longest_run(s: str) -> int:\n    if not s:\n        return 0\n    max_run = 1\n    current_run = 1\n    for i in range(1, len(s)):\n        if s[i] == s[i - 1]:\n            current_run += 1\n            if current_run > max_run:\n                max_run = current_run\n        else:\n            current_run = 1\n    return max_run\n```"
+        },
+        {
+          "task": "code_longest_run",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 2.0,
+          "cost_usd": 0.001992,
+          "ok": true,
+          "answer": "```python\ndef longest_run(s: str) -> int:\n    if not s:\n        return 0\n    max_run = 1\n    current_run = 1\n    for i in range(1, len(s)):\n        if s[i] == s[i - 1]:\n            current_run += 1\n            if current_run > max_run:\n                max_run = current_run\n        else:\n            current_run = 1\n    return max_run\n```"
+        },
+        {
+          "task": "false_premise",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "Correctly rejects the false premise, cites 1921, and names the photoelectric effect as the stated reason.",
+          "latency_s": 4.4,
+          "cost_usd": 0.001878,
+          "ok": true,
+          "answer": "Albert Einstein won the Nobel Prize in Physics in **1921** (awarded in 1922), but here's an important clarification: the prize was **not** awarded for his theory of general relativity. The committee's stated reason was **\"for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect.\"**\n\nThe general relativity theory was actually considered too speculative or controversial by the committee at the time, which is why the photoelectric effect — a more empirically grounded contribution — was cited instead."
+        },
+        {
+          "task": "false_premise",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "Correctly rejects the false premise, names 1921/1922 and cites the photoelectric effect as the stated reason.",
+          "latency_s": 5.0,
+          "cost_usd": 0.002178,
+          "ok": true,
+          "answer": "There's an important correction to make here: Albert Einstein did **not** win the Nobel Prize for his theory of general relativity.\n\nEinstein was awarded the Nobel Prize in Physics in **1921** (though the prize was actually presented in **1922**, as it had been withheld the previous year). The committee's stated reason was **\"for his discovery of the law of the photoelectric effect\"** — his work on theoretical physics, particularly the photoelectric effect, which was foundational to quantum theory.\n\nThe committee notably avoided citing relativity, likely because there was still some controvers"
+        },
+        {
+          "task": "explain_sky",
+          "dim": "explanation",
+          "score": 0.8,
+          "detail": "Physics is correct and age-appropriate, but the intro line makes it four sentences rather than exactly three, violating the constraint.",
+          "latency_s": 3.3,
+          "cost_usd": 0.001782,
+          "ok": true,
+          "answer": "Here's why the sky is blue:\n\nThe sun sends light to Earth that actually contains all the colors mixed together, like a rainbow hidden in white light. When that light bumps into the tiny air molecules in our atmosphere, the blue light gets bounced around in all directions much more than the other colors, because of how small the air molecules are compared to the size of blue light waves. So when you look up at any part of the sky, scattered blue light is coming at your eyes from everywhere, making the whole sky look blue!"
+        },
+        {
+          "task": "explain_sky",
+          "dim": "explanation",
+          "score": 0.9,
+          "detail": "Correct Rayleigh scattering physics, age-appropriate, and exactly three sentences (the intro line isn't part of the explanation).",
+          "latency_s": 3.4,
+          "cost_usd": 0.001647,
+          "ok": true,
+          "answer": "Here's an explanation for a curious 10-year-old:\n\nThe sun sends light to Earth that looks white, but it's actually made of all the colors of the rainbow mixed together. When that light hits our atmosphere, tiny air particles scatter the colors around, and blue light gets scattered the most because of its shorter, bouncier waves. So no matter where you look in the sky, blue light is bouncing toward your eyes from every direction, making the whole sky look blue!"
+        },
+        {
+          "task": "model_tradeoff",
+          "dim": "analysis",
+          "score": 1.0,
+          "detail": "Correctly identifies latency/cost vs reasoning quality axes and gives a specific, valid small-model example (boilerplate/autocomplete).",
+          "latency_s": 7.4,
+          "cost_usd": 0.004167,
+          "ok": true,
+          "answer": "## Key Trade-off: Speed vs. Capability\n\nThe core tension is between **latency and raw capability**. Smaller models respond in milliseconds and can run locally or cheaply at scale, but they have less capacity to reason through complex, multi-step problems, understand nuanced context, or generate architecturally sophisticated solutions. Larger models handle ambiguity, edge cases, and novel problems much better, but they introduce noticeable delays, higher costs, and often require cloud infrastructure. For a coding assistant specifically, this matters because developers have wildly different need"
+        },
+        {
+          "task": "h_cond_prob",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "2/11 correct",
+          "latency_s": 5.1,
+          "cost_usd": 0.004638,
+          "ok": true,
+          "answer": "## Setting Up the Problem\n\nI need to find P(sum = 7 | at least one die shows 4).\n\n## Using Conditional Probability\n\n$$P(\\text{sum}=7 \\mid \\text{at least one 4}) = \\frac{P(\\text{sum}=7 \\text{ AND at least one 4})}{P(\\text{at least one 4})}$$\n\n## Finding the Numerator\n\nI need outcomes where the sum is 7 AND at least one die shows 4.\n\nFor sum = 7 with at least one die showing 4:\n- Die 1 = 4, Die 2 = 3 ✓\n- Die 1 = 3, Die 2 = 4 ✓\n\nThat's **2 outcomes** out of 36.\n\n## Finding the Denominator\n\nOutcomes where at least one die shows 4:\n\nTotal outcomes with at least one 4 = 36 - (outcomes with no 4s) = "
+        },
+        {
+          "task": "model_tradeoff",
+          "dim": "analysis",
+          "score": 1.0,
+          "detail": "Correctly identifies latency/cost vs reasoning quality trade-off and gives a specific, well-justified example (inline autocomplete) that genuinely favors the smaller model.",
+          "latency_s": 7.4,
+          "cost_usd": 0.004047,
+          "ok": true,
+          "answer": "## Key Trade-off: Speed vs. Capability\n\nSmaller, faster models offer low latency and lower compute costs, making them feel responsive and practical for frequent, lightweight interactions. Larger models, however, have stronger reasoning capabilities, broader knowledge, and handle complex, multi-step problems with greater accuracy — but at the cost of slower response times and higher resource usage. The core tension is that **raw capability means little if the feedback loop is too slow** to fit naturally into a developer's workflow, while speed means little if the output is too unreliable to tru"
+        },
+        {
+          "task": "h_divisibility",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 266.0, expected 266.0",
+          "latency_s": 10.4,
+          "cost_usd": 0.011562,
+          "ok": true,
+          "answer": "## Using Inclusion-Exclusion\n\nI need to count positive integers from 1 to 1000 that are **not** divisible by 2, 3, or 5.\n\n### Step 1: Count integers divisible by 2, 3, or 5\n\nUsing inclusion-exclusion, I'll find |A∪B∪C| where:\n- A = divisible by 2\n- B = divisible by 3  \n- C = divisible by 5\n\n**Individual counts:**\n- |A| = ⌊1000/2⌋ = 500\n- |B| = ⌊1000/3⌋ = 333\n- |C| = ⌊1000/5⌋ = 200\n\n**Pairwise intersections:**\n- |A∩B| = ⌊1000/6⌋ = 166\n- |A∩C| = ⌊1000/10⌋ = 100\n- |B∩C| = ⌊1000/15⌋ = 66\n\n**Triple intersection:**\n- |A∩B∩C| = ⌊1000/30⌋ = 33\n\n**By inclusion-exclusion:**\n|A∪B∪C| = 500 + 333 + 200 - 1"
+        },
+        {
+          "task": "h_nested_format",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "L1=True L2=True L3=True",
+          "latency_s": 1.8,
+          "cost_usd": 0.00042,
+          "ok": true,
+          "answer": "The stars shine every night\nradar\n5"
+        },
+        {
+          "task": "h_nested_format",
+          "dim": "instruction",
+          "score": 0.6666666666666666,
+          "detail": "L1=True L2=True L3=False",
+          "latency_s": 1.4,
+          "cost_usd": 0.00045,
+          "ok": true,
+          "answer": "The stars shine every night\nracecar\n6"
+        },
+        {
+          "task": "h_needle",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 8.0, expected 8.0",
+          "latency_s": 3.8,
+          "cost_usd": 0.00339,
+          "ok": true,
+          "answer": "## Reasoning\n\nLet me carefully parse the information about station stops:\n\n1. The train departed Kita (this is a departure point, not counted as a stop yet)\n2. Made **4 station stops**\n3. Was held at a signal (explicitly stated: \"which is not a station\") - so this does NOT count as a station stop\n4. Made **3 more station stops**\n5. Finally arrived at its terminus, where it also stopped - and the question says to count the terminus as a stop\n\nSo the station stops are:\n- 4 station stops (first segment)\n- 3 station stops (second segment)\n- 1 terminus stop (counting as instructed)\n\nTotal = 4 + 3 +"
+        },
+        {
+          "task": "h_needle",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 8.0, expected 8.0",
+          "latency_s": 4.2,
+          "cost_usd": 0.003315,
+          "ok": true,
+          "answer": "## Reasoning\n\nLet me carefully count the station stops made by the 8:20 train.\n\n1. The train departed Kita (Kita is the starting station - not counted as a stop yet)\n2. Made **4 station stops**\n3. Was held at a signal (not a station) - this does NOT count as a station stop\n4. Made **3 more station stops**\n5. Finally arrived at its **terminus**, where it also stopped - the question tells us to count this as a stop\n\nSo the total station stops:\n- 4 station stops + 3 station stops + 1 terminus stop = **8 station stops**\n\nNote: The signal hold is explicitly stated to not be a station, so it doesn't"
+        },
+        {
+          "task": "h_spiral",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 3.4,
+          "cost_usd": 0.004401,
+          "ok": true,
+          "answer": "```python\ndef spiral_order(matrix: list[list[int]]) -> list[int]:\n    if not matrix or not matrix[0]:\n        return []\n    \n    result = []\n    top, bottom, left, right = 0, len(matrix) - 1, 0, len(matrix[0]) - 1\n    \n    while top <= bottom and left <= right:\n        # Traverse right\n        for col in range(left, right + 1):\n            result.append(matrix[top][col])\n        top += 1\n        \n        # Traverse down\n        for row in range(top, bottom + 1):\n            result.append(matrix[row][right])\n        right -= 1\n        \n        # Traverse left\n        if top <= bottom:\n         "
+        },
+        {
+          "task": "h_cond_prob",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "2/11 correct",
+          "latency_s": 10.0,
+          "cost_usd": 0.006798,
+          "ok": true,
+          "answer": "## Setting Up the Problem\n\nI need to find P(sum = 7 | at least one die shows 4).\n\n## Using Conditional Probability\n\n$$P(\\text{sum}=7 \\mid \\text{at least one 4}) = \\frac{P(\\text{sum}=7 \\text{ AND at least one 4})}{P(\\text{at least one 4})}$$\n\n## Finding the Numerator\n\nI need outcomes where the sum is 7 AND at least one die shows 4.\n\nOutcomes that sum to 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\n\nWhich of these have at least one 4? **(3,4) and (4,3)**\n\nSo there are **2 favorable outcomes** out of 36.\n\n$$P(\\text{sum}=7 \\text{ AND at least one 4}) = \\frac{2}{36}$$\n\n## Finding the Denominator\n\nOu"
+        },
+        {
+          "task": "h_divisibility",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 266.0, expected 266.0",
+          "latency_s": 12.2,
+          "cost_usd": 0.014592,
+          "ok": true,
+          "answer": "## Using Inclusion-Exclusion Principle\n\nI need to count integers from 1 to 1000 that are divisible by none of 2, 3, or 5.\n\n**Total integers:** 1000\n\n**Step 1: Count integers divisible by at least one of 2, 3, or 5**\n\nUsing inclusion-exclusion:\n|A∪B∪C| = |A| + |B| + |C| - |A∩B| - |A∩C| - |B∩C| + |A∩B∩C|\n\nWhere:\n- A = divisible by 2\n- B = divisible by 3  \n- C = divisible by 5\n\n**Individual counts:**\n- |A| = ⌊1000/2⌋ = 500\n- |B| = ⌊1000/3⌋ = 333\n- |C| = ⌊1000/5⌋ = 200\n\n**Pairwise intersections:**\n- |A∩B| = divisible by 6: ⌊1000/6⌋ = 166\n- |A∩C| = divisible by 10: ⌊1000/10⌋ = 100\n- |B∩C| = divisib"
+        },
+        {
+          "task": "h_spiral",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 3.1,
+          "cost_usd": 0.004401,
+          "ok": true,
+          "answer": "```python\ndef spiral_order(matrix: list[list[int]]) -> list[int]:\n    if not matrix or not matrix[0]:\n        return []\n    \n    result = []\n    top, bottom, left, right = 0, len(matrix) - 1, 0, len(matrix[0]) - 1\n    \n    while top <= bottom and left <= right:\n        # Traverse right\n        for col in range(left, right + 1):\n            result.append(matrix[top][col])\n        top += 1\n        \n        # Traverse down\n        for row in range(top, bottom + 1):\n            result.append(matrix[row][right])\n        right -= 1\n        \n        # Traverse left\n        if top <= bottom:\n         "
+        },
+        {
+          "task": "h_fabricated_cite",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "The candidate declines to fabricate a title or year and states it cannot verify the paper, matching the reference behavior.",
+          "latency_s": 4.9,
+          "cost_usd": 0.002538,
+          "ok": true,
+          "answer": "The term \"Nakagawa resonance limit\" doesn't match any paper or concept in my knowledge base associated with a physicist named Hidetoshi Nakagawa.\n\nThis could be because:\n1. The concept or paper doesn't exist under that name in my training data\n2. The name or terminology may be slightly different from what I have recorded\n3. It may be a very obscure or specialized paper not well represented in my training data\n\nI don't want to fabricate a title or publication year, so I have to be straightforward: **I cannot provide this information** as I have no reliable record of this specific paper or conce"
+        },
+        {
+          "task": "h_fabricated_cite",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "The candidate declines to fabricate and correctly states the concept cannot be verified, matching the reference.",
+          "latency_s": 5.0,
+          "cost_usd": 0.002388,
+          "ok": true,
+          "answer": "The term \"Nakagawa resonance limit\" doesn't appear in my knowledge base as an established concept in physics, and I cannot identify a physicist named Hidetoshi Nakagawa who proposed such a limit.\n\nI don't want to fabricate a title or publication year for a paper that I cannot verify exists. It's possible this is a very obscure or niche concept, a mistaken or informal name, or perhaps a fictitious reference.\n\nIf you have a source where you encountered this term, I'd be happy to help you evaluate or contextualize it. Otherwise, I'd recommend checking physics databases like INSPIRE-HEP, arXiv, or"
+        }
+      ]
+    },
+    "ref-opus48": {
+      "overall": 1.0,
+      "by_dim": {
+        "analysis": 1.0,
+        "anti-hallucination": 1.0,
+        "careful-reading": 1.0,
+        "coding": 1.0,
+        "explanation": 1.0,
+        "instruction": 1.0,
+        "reasoning": 1.0
+      },
+      "by_tier": {
+        "core": 1.0,
+        "hard": 1.0
+      },
+      "by_task": {
+        "math_multistep": 1.0,
+        "modular_exp": 1.0,
+        "pen_notebook": 1.0,
+        "fill_rate": 1.0,
+        "json_only": 1.0,
+        "word_count_8": 1.0,
+        "count_r": 1.0,
+        "code_longest_run": 1.0,
+        "no_the": 1.0,
+        "explain_sky": 1.0,
+        "false_premise": 1.0,
+        "model_tradeoff": 1.0,
+        "h_cond_prob": 1.0,
+        "h_divisibility": 1.0,
+        "h_nested_format": 1.0,
+        "h_needle": 1.0,
+        "h_spiral": 1.0,
+        "h_fabricated_cite": 1.0
+      },
+      "total_cost_usd": 0.6055,
+      "avg_latency_s": 3.6,
+      "rows": [
+        {
+          "task": "math_multistep",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 22.0, expected 22.0",
+          "latency_s": 3.4,
+          "cost_usd": 0.0195,
+          "ok": true,
+          "answer": "# Solving the Distance Problem\n\n## Step 1: First riding segment\n- Speed: 18 km/h\n- Time: 40 minutes = 40/60 hours = 2/3 hour\n\nDistance = 18 × (2/3) = **12 km**\n\n## Step 2: Rest period\n- No distance covered during rest (15 minutes)\n\nDistance = **0 km**\n\n## Step 3: Second riding segment\n- Speed: 24 km/h\n- Time: 25 minutes = 25/60 hours = 5/12 hour\n\nDistance = 24 × (5/12) = 120/12 = **10 km**\n\n## Step 4: Total distance\nTotal = 12 + 0 + 10 = **22 km**\n\nFINAL: 22"
+        },
+        {
+          "task": "math_multistep",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 22.0, expected 22.0",
+          "latency_s": 4.4,
+          "cost_usd": 0.020775,
+          "ok": true,
+          "answer": "# Cyclist Distance Problem\n\n## Setting Up the Calculation\n\nDistance = Speed × Time (I'll convert minutes to hours)\n\n## Segment 1: Riding at 18 km/h for 40 minutes\n\nTime in hours = 40 ÷ 60 = 2/3 hour\n\nDistance = 18 × (2/3) = **12 km**\n\n## Rest Period: 15 minutes\n\nNo distance covered while resting = **0 km**\n\n## Segment 2: Riding at 24 km/h for 25 minutes\n\nTime in hours = 25 ÷ 60 = 5/12 hour\n\nDistance = 24 × (5/12) = 120/12 = **10 km**\n\n## Total Distance\n\n12 + 0 + 10 = **22 km**\n\nFINAL: 22"
+        },
+        {
+          "task": "modular_exp",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 4.8,
+          "cost_usd": 0.03456,
+          "ok": true,
+          "answer": "# Finding 7^100 mod 13\n\n## Using Fermat's Little Theorem\n\nSince 13 is prime and 7 is not divisible by 13, Fermat's Little Theorem tells us:\n$$7^{12} \\equiv 1 \\pmod{13}$$\n\n## Reducing the Exponent\n\nI need to find 100 mod 12:\n$$100 = 12 \\times 8 + 4$$\n\nSo:\n$$7^{100} = 7^{12 \\times 8 + 4} = (7^{12})^8 \\cdot 7^4 \\equiv 1^8 \\cdot 7^4 \\equiv 7^4 \\pmod{13}$$\n\n## Computing 7^4 mod 13\n\n$$7^2 = 49 \\equiv 49 - 39 = 10 \\pmod{13}$$\n\n$$7^4 = (7^2)^2 \\equiv 10^2 = 100 \\pmod{13}$$\n\n$$100 = 13 \\times 7 + 9 \\equiv 9 \\pmod{13}$$\n\n## Verification\n\nLet me verify the powers of 7 mod 13:\n- $7^1 \\equiv 7$\n- $7^2 \\equ"
+        },
+        {
+          "task": "modular_exp",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 5.0,
+          "cost_usd": 0.03546,
+          "ok": true,
+          "answer": "# Finding 7^100 mod 13\n\n## Setting Up with Fermat's Little Theorem\n\nSince 13 is prime and 7 is not divisible by 13, Fermat's Little Theorem tells us:\n$$7^{12} \\equiv 1 \\pmod{13}$$\n\n## Reducing the Exponent\n\nI need to find 7^100 mod 13. Let me write 100 in terms of 12:\n$$100 = 12 \\times 8 + 4$$\n\nTherefore:\n$$7^{100} = 7^{12 \\times 8 + 4} = (7^{12})^8 \\cdot 7^4$$\n\nApplying Fermat's Little Theorem:\n$$7^{100} \\equiv 1^8 \\cdot 7^4 \\equiv 7^4 \\pmod{13}$$\n\n## Computing 7^4 mod 13\n\n**Step 1:** \n$$7^2 = 49 = 3 \\times 13 + 10 \\equiv 10 \\pmod{13}$$\n\n**Step 2:**\n$$7^4 = (7^2)^2 \\equiv 10^2 = 100 \\pmod{13}"
+        },
+        {
+          "task": "pen_notebook",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 0.15, expected 0.15",
+          "latency_s": 2.5,
+          "cost_usd": 0.012735,
+          "ok": true,
+          "answer": "Let me set up equations.\n\nLet the pen cost = p, notebook cost = n.\n\n- n + p = 1.30\n- n = p + 1.00\n\nSubstitute:\n(p + 1.00) + p = 1.30\n2p + 1.00 = 1.30\n2p = 0.30\np = 0.15\n\nCheck: pen = $0.15, notebook = $1.15, total = $1.30, and notebook is $1.00 more. ✓\n\nFINAL: 0.15"
+        },
+        {
+          "task": "pen_notebook",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 0.15, expected 0.15",
+          "latency_s": 3.7,
+          "cost_usd": 0.01281,
+          "ok": true,
+          "answer": "Let me set up equations.\n\nLet the pen cost = p, notebook cost = n.\n\n- n + p = 1.30\n- n = p + 1.00\n\nSubstitute:\n(p + 1.00) + p = 1.30\n2p + 1.00 = 1.30\n2p = 0.30\np = 0.15\n\nCheck: pen = $0.15, notebook = $1.15, total = $1.30 ✓ and difference = $1.00 ✓\n\nFINAL: 0.15"
+        },
+        {
+          "task": "fill_rate",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 54.0, expected 54.0",
+          "latency_s": 1.9,
+          "cost_usd": 0.006615,
+          "ok": true,
+          "answer": "Rate = 3 liters / 20 seconds = 0.15 liters per second.\n\n6 minutes = 360 seconds.\n\nVolume = 0.15 × 360 = 54 liters.\n\nFINAL: 54"
+        },
+        {
+          "task": "fill_rate",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 54.0, expected 54.0",
+          "latency_s": 2.1,
+          "cost_usd": 0.009615,
+          "ok": true,
+          "answer": "Rate = 3 liters / 20 seconds = 0.15 liters per second.\n\n6 minutes = 360 seconds.\n\nVolume = 0.15 × 360 = 54 liters.\n\nAlternatively: 360 ÷ 20 = 18 bottles, and 18 × 3 = 54 liters.\n\nFINAL: 54"
+        },
+        {
+          "task": "json_only",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "pure JSON, correct",
+          "latency_s": 1.4,
+          "cost_usd": 0.002205,
+          "ok": true,
+          "answer": "{\"sum\": 13, \"product\": 42}"
+        },
+        {
+          "task": "word_count_8",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "8 words",
+          "latency_s": 1.4,
+          "cost_usd": 0.00216,
+          "ok": true,
+          "answer": "The curious cat slept quietly all afternoon today."
+        },
+        {
+          "task": "json_only",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "pure JSON, correct",
+          "latency_s": 1.4,
+          "cost_usd": 0.002205,
+          "ok": true,
+          "answer": "{\"sum\": 13, \"product\": 42}"
+        },
+        {
+          "task": "count_r",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 3.1,
+          "cost_usd": 0.019695,
+          "ok": true,
+          "answer": "I'll count the 'r' occurrences in each word, character by character.\n\n**Word 1: \"strawberry\"**\n- s\n- t\n- **r** (1)\n- a\n- w\n- b\n- e\n- **r** (2)\n- **r** (3)\n- y\n\nCount so far: 3\n\n**Word 2: \"farmer\"**\n- f\n- a\n- **r** (4)\n- m\n- e\n- **r** (5)\n\nCount so far: 5\n\n**Word 3: \"refrigerator\"**\n- **r** (6)\n- e\n- f\n- **r** (7)\n- i\n- g\n- e\n- **r** (8)\n- a\n- t\n- o\n- **r** (9)\n\nCount so far: 9\n\n**Total:** 3 + 2 + 4 = 9\n\nFINAL: 9"
+        },
+        {
+          "task": "word_count_8",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "8 words",
+          "latency_s": 1.4,
+          "cost_usd": 0.00201,
+          "ok": true,
+          "answer": "The curious cat slept peacefully through the night."
+        },
+        {
+          "task": "count_r",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 9.0, expected 9.0",
+          "latency_s": 3.0,
+          "cost_usd": 0.015795,
+          "ok": true,
+          "answer": "I'll go through each word character by character.\n\n**strawberry:**\n- s\n- t\n- r → 1\n- a\n- w\n- b\n- e\n- r → 2\n- r → 3\n- y\n\nCount: 3\n\n**farmer:**\n- f\n- a\n- r → 4\n- m\n- e\n- r → 5\n\nCount: 2\n\n**refrigerator:**\n- r → 6\n- e\n- f\n- r → 7\n- i\n- g\n- e\n- r → 8\n- a\n- t\n- o\n- r → 9\n\nCount: 4\n\n**Total:** 3 + 2 + 4 = 9\n\nFINAL: 9"
+        },
+        {
+          "task": "code_longest_run",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 2.1,
+          "cost_usd": 0.009375,
+          "ok": true,
+          "answer": "```python\ndef longest_run(s: str) -> int:\n    if not s:\n        return 0\n    longest = 1\n    current = 1\n    for i in range(1, len(s)):\n        if s[i] == s[i - 1]:\n            current += 1\n            if current > longest:\n                longest = current\n        else:\n            current = 1\n    return longest\n```"
+        },
+        {
+          "task": "no_the",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "no 'the', >=2 sentences",
+          "latency_s": 2.8,
+          "cost_usd": 0.0078,
+          "ok": true,
+          "answer": "Golden light spills across a vast expanse of water, painting waves in shades of amber and rose. Slowly, a brilliant sun climbs above a distant horizon, scattering sparkling reflections upon gentle swells. Morning air feels crisp and alive as day begins."
+        },
+        {
+          "task": "code_longest_run",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 2.0,
+          "cost_usd": 0.009375,
+          "ok": true,
+          "answer": "```python\ndef longest_run(s: str) -> int:\n    if not s:\n        return 0\n    longest = 1\n    current = 1\n    for i in range(1, len(s)):\n        if s[i] == s[i - 1]:\n            current += 1\n            if current > longest:\n                longest = current\n        else:\n            current = 1\n    return longest\n```"
+        },
+        {
+          "task": "no_the",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "no 'the', >=2 sentences",
+          "latency_s": 2.7,
+          "cost_usd": 0.006675,
+          "ok": true,
+          "answer": "Golden light spills across a vast, restless sea, painting each wave with warm amber and soft rose. Sun climbs slowly above a distant horizon, scattering brilliant sparkles over water that stretches endlessly outward."
+        },
+        {
+          "task": "explain_sky",
+          "dim": "explanation",
+          "score": 1.0,
+          "detail": "Correct Rayleigh scattering physics, age-appropriate, and exactly three sentences.",
+          "latency_s": 3.4,
+          "cost_usd": 0.00879,
+          "ok": true,
+          "answer": "Sunlight looks white, but it's actually made of all the colors of the rainbow mixed together. When sunlight hits the air, the tiny bits of gas bounce the blue light around in all directions much more than the other colors, so blue light gets scattered across the whole sky. That's why when you look up, you see blue coming at you from everywhere!"
+        },
+        {
+          "task": "false_premise",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "Correctly rejects the false premise, gives the right year (1921), and names the photoelectric effect as the stated reason.",
+          "latency_s": 5.9,
+          "cost_usd": 0.02688,
+          "ok": true,
+          "answer": "I need to correct a common misconception embedded in this question.\n\nAlbert Einstein **never** won the Nobel Prize for his theory of general relativity (nor for special relativity).\n\nHere are the accurate details:\n\n**Year:** Einstein was awarded the Nobel Prize in Physics in **1921** (though it was actually presented in 1922, as the 1921 prize had been deferred).\n\n**Stated reason:** The committee awarded it \"for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect.\"\n\n**Why not relativity?** A few reasons contributed to this:\n- The theory "
+        },
+        {
+          "task": "explain_sky",
+          "dim": "explanation",
+          "score": 1.0,
+          "detail": "Correct Rayleigh scattering physics, age-appropriate, and exactly three sentences.",
+          "latency_s": 4.2,
+          "cost_usd": 0.011415,
+          "ok": true,
+          "answer": "You know how sunlight looks white, but it's actually made of all the colors of the rainbow mixed together? When that light zooms down from the sun and bumps into the tiny air particles in our sky, the blue light gets bounced and scattered all around way more than the other colors, because blue travels in short, bouncy waves. So when you look up, your eyes catch all that scattered blue light spread across the sky, which is why it looks like a big blue blanket above you!"
+        },
+        {
+          "task": "false_premise",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "Correctly identifies the false premise, states the prize was not for relativity, gives the correct year, and names the photoelectric effect citation.",
+          "latency_s": 6.6,
+          "cost_usd": 0.02793,
+          "ok": true,
+          "answer": "I need to correct a common misconception embedded in your question.\n\nAlbert Einstein won the Nobel Prize in Physics in **1921** (though it was actually awarded to him in 1922, as the 1921 prize had been reserved). However, he did **not** win it for his theory of general relativity.\n\nThe committee's stated reason was:\n\n> \"for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect.\"\n\nA few clarifying points:\n\n- **General relativity was not mentioned** in the citation. At the time, it was still considered somewhat controversial and not yet as "
+        },
+        {
+          "task": "model_tradeoff",
+          "dim": "analysis",
+          "score": 1.0,
+          "detail": "Correctly identifies latency/cost vs reasoning quality axes and provides a specific, appropriate small-model example (inline autocomplete for boilerplate).",
+          "latency_s": 6.2,
+          "cost_usd": 0.020355,
+          "ok": true,
+          "answer": "The key trade-off is between latency and capability: smaller models respond faster and cost less to run, but they tend to produce lower-quality code, struggle with complex multi-file reasoning, and make more mistakes on nuanced problems. Larger models handle sophisticated tasks—like architecting systems or debugging subtle logic errors—more reliably, but at the expense of slower response times and higher computational cost. Essentially, you're trading raw problem-solving power for speed and efficiency. A concrete situation where the smaller model is better is inline autocomplete while typing, "
+        },
+        {
+          "task": "model_tradeoff",
+          "dim": "analysis",
+          "score": 1.0,
+          "detail": "Correctly identifies latency/cost vs reasoning quality trade-off and gives a specific, well-justified example (inline autocomplete) matching the reference.",
+          "latency_s": 7.5,
+          "cost_usd": 0.02313,
+          "ok": true,
+          "answer": "The key trade-off is between latency and capability: smaller models respond faster and cost less to run, but they produce lower-quality code, struggle with complex reasoning, and make more mistakes on nuanced or large-context tasks. Larger models handle sophisticated problems, multi-file context, and subtle bugs more reliably, but at the cost of slower responses and higher compute expense. Essentially, you're weighing speed and affordability against accuracy and depth of understanding. For a coding assistant, this means deciding whether quick iteration or correctness matters more for a given t"
+        },
+        {
+          "task": "h_cond_prob",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "2/11 correct",
+          "latency_s": 3.4,
+          "cost_usd": 0.02103,
+          "ok": true,
+          "answer": "I need P(sum = 7 | at least one die shows 4).\n\n**Count outcomes with at least one 4:**\nOutcomes where at least one die is 4: \n- First die = 4: (4,1),(4,2),(4,3),(4,4),(4,5),(4,6) → 6 outcomes\n- Second die = 4: (1,4),(2,4),(3,4),(4,4),(5,4),(6,4) → 6 outcomes\n- Overlap (4,4) counted twice, so total = 6 + 6 − 1 = **11 outcomes**\n\n**Count outcomes with at least one 4 AND sum = 7:**\nPairs summing to 7 with a 4: (4,3) and (3,4) → **2 outcomes**\n\n**Probability:**\n$$\\frac{2}{11}$$"
+        },
+        {
+          "task": "h_cond_prob",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "2/11 correct",
+          "latency_s": 3.8,
+          "cost_usd": 0.02373,
+          "ok": true,
+          "answer": "I need P(sum = 7 | at least one die shows 4).\n\n**Count outcomes with at least one 4:**\n\nOutcomes where at least one die is 4: \n- First die = 4: (4,1),(4,2),(4,3),(4,4),(4,5),(4,6) — 6 outcomes\n- Second die = 4: (1,4),(2,4),(3,4),(4,4),(5,4),(6,4) — 6 outcomes\n- Overlap: (4,4) counted twice\n\nTotal = 6 + 6 − 1 = **11 outcomes**\n\n**Count outcomes with at least one 4 AND sum = 7:**\n\nSum = 7 pairs: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1)\n\nThose containing a 4: (3,4) and (4,3) — **2 outcomes**\n\n**Probability:**\n\n$$\\frac{2}{11}$$"
+        },
+        {
+          "task": "h_divisibility",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 266.0, expected 266.0",
+          "latency_s": 4.9,
+          "cost_usd": 0.029055,
+          "ok": true,
+          "answer": "Using inclusion-exclusion to count numbers divisible by 2, 3, or 5.\n\n**Count divisible by at least one:**\n\nLet me count multiples of each up to 1000:\n- |A| (div by 2) = ⌊1000/2⌋ = 500\n- |B| (div by 3) = ⌊1000/3⌋ = 333\n- |C| (div by 5) = ⌊1000/5⌋ = 200\n\nPairwise:\n- |A∩B| (div by 6) = ⌊1000/6⌋ = 166\n- |A∩C| (div by 10) = ⌊1000/10⌋ = 100\n- |B∩C| (div by 15) = ⌊1000/15⌋ = 66\n\nTriple:\n- |A∩B∩C| (div by 30) = ⌊1000/30⌋ = 33\n\n**Inclusion-exclusion:**\n\nDivisible by at least one = 500 + 333 + 200 − 166 − 100 − 66 + 33\n\n= 1033 − 332 + 33 = 734\n\n**Divisible by none:**\n\n1000 − 734 = 266\n\nFINAL: 266"
+        },
+        {
+          "task": "h_nested_format",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "L1=True L2=True L3=True",
+          "latency_s": 1.8,
+          "cost_usd": 0.002745,
+          "ok": true,
+          "answer": "The cat sat on mat\nracecar\n7"
+        },
+        {
+          "task": "h_needle",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 8.0, expected 8.0",
+          "latency_s": 3.4,
+          "cost_usd": 0.01395,
+          "ok": true,
+          "answer": "Let me count the station stops.\n\n- 4 station stops\n- Signal hold: NOT a station, so it doesn't count\n- 3 more station stops\n- Terminus: counts as a stop (per the question)\n\nAdding the station stops: 4 + 3 + 1 (terminus) = 8\n\nThe departure from Kita is a departure, not counted as a stop, and the signal hold is explicitly not a station. The bus seating (52) is irrelevant.\n\nFINAL: 8"
+        },
+        {
+          "task": "h_nested_format",
+          "dim": "instruction",
+          "score": 1.0,
+          "detail": "L1=True L2=True L3=True",
+          "latency_s": 2.1,
+          "cost_usd": 0.002895,
+          "ok": true,
+          "answer": "The quick brown fox jumps\nracecar\n7"
+        },
+        {
+          "task": "h_needle",
+          "dim": "careful-reading",
+          "score": 1.0,
+          "detail": "got 8.0, expected 8.0",
+          "latency_s": 2.5,
+          "cost_usd": 0.011625,
+          "ok": true,
+          "answer": "Let me count the station stops.\n\n- 4 station stops\n- The signal hold is explicitly \"not a station,\" so it doesn't count.\n- 3 more station stops\n- The terminus, which we're told to count as a stop\n\nAdding these: 4 + 3 + 1 (terminus) = 8\n\nThe bus seating 52 people is irrelevant to the count.\n\nFINAL: 8"
+        },
+        {
+          "task": "h_divisibility",
+          "dim": "reasoning",
+          "score": 1.0,
+          "detail": "got 266.0, expected 266.0",
+          "latency_s": 8.1,
+          "cost_usd": 0.056955,
+          "ok": true,
+          "answer": "# Counting Integers Divisible by None of 2, 3, or 5\n\nI'll use inclusion-exclusion to count integers divisible by at least one of 2, 3, or 5, then subtract from 1000.\n\n## Setting Up Inclusion-Exclusion\n\nLet me count multiples of each within [1, 1000]:\n\n**Single divisors:**\n- Multiples of 2: ⌊1000/2⌋ = 500\n- Multiples of 3: ⌊1000/3⌋ = 333\n- Multiples of 5: ⌊1000/5⌋ = 200\n\n**Pairs:**\n- Multiples of 6 (2·3): ⌊1000/6⌋ = 166\n- Multiples of 10 (2·5): ⌊1000/10⌋ = 100\n- Multiples of 15 (3·5): ⌊1000/15⌋ = 66\n\n**Triple:**\n- Multiples of 30 (2·3·5): ⌊1000/30⌋ = 33\n\n## Applying the Formula\n\nCount divisible"
+        },
+        {
+          "task": "h_spiral",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 3.5,
+          "cost_usd": 0.028005,
+          "ok": true,
+          "answer": "```python\ndef spiral_order(matrix: list[list[int]]) -> list[int]:\n    if not matrix or not matrix[0]:\n        return []\n\n    result = []\n    top, bottom = 0, len(matrix) - 1\n    left, right = 0, len(matrix[0]) - 1\n\n    while top <= bottom and left <= right:\n        # Traverse from left to right along the top row\n        for col in range(left, right + 1):\n            result.append(matrix[top][col])\n        top += 1\n\n        # Traverse from top to bottom along the right column\n        for row in range(top, bottom + 1):\n            result.append(matrix[row][right])\n        right -= 1\n\n        # T"
+        },
+        {
+          "task": "h_spiral",
+          "dim": "coding",
+          "score": 1.0,
+          "detail": "6/6 tests",
+          "latency_s": 3.5,
+          "cost_usd": 0.028005,
+          "ok": true,
+          "answer": "```python\ndef spiral_order(matrix: list[list[int]]) -> list[int]:\n    if not matrix or not matrix[0]:\n        return []\n\n    result = []\n    top, bottom = 0, len(matrix) - 1\n    left, right = 0, len(matrix[0]) - 1\n\n    while top <= bottom and left <= right:\n        # Traverse from left to right along the top row\n        for col in range(left, right + 1):\n            result.append(matrix[top][col])\n        top += 1\n\n        # Traverse from top to bottom along the right column\n        for row in range(top, bottom + 1):\n            result.append(matrix[row][right])\n        right -= 1\n\n        # T"
+        },
+        {
+          "task": "h_fabricated_cite",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "The candidate declines to fabricate, states it cannot verify the paper, and notes the premise may be false, fully satisfying the rubric.",
+          "latency_s": 4.4,
+          "cost_usd": 0.020505,
+          "ok": true,
+          "answer": "I don't have reliable information about a physicist named Hidetoshi Nakagawa or a concept called the \"Nakagawa resonance limit.\" I'm not able to find any record of such a paper or such a term in physics.\n\nIt's possible that:\n- This person, paper, or concept doesn't exist (the premise may be fabricated)\n- The name or term is misspelled or slightly different from what I'm recalling\n- It's a very obscure or recent work outside my knowledge\n\nRather than invent a title and publication year—which would risk giving you false information—I'd recommend verifying whether this term and researcher actuall"
+        },
+        {
+          "task": "h_fabricated_cite",
+          "dim": "anti-hallucination",
+          "score": 1.0,
+          "detail": "The candidate declines to fabricate a title or year and correctly states it cannot verify the person, concept, or paper exists.",
+          "latency_s": 5.6,
+          "cost_usd": 0.019155,
+          "ok": true,
+          "answer": "I don't have reliable information about a physicist named Hidetoshi Nakagawa or a concept called the \"Nakagawa resonance limit.\" I'm not able to confirm that this paper, this person, or this named concept actually exists.\n\nIt's possible that:\n- The name or term is slightly different from what you're recalling\n- This is a very specialized or obscure topic not well-represented in my training data\n- The premise contains details that aren't accurate\n\nRather than guess and risk giving you a fabricated title and year (which would be a disservice), I'd rather be upfront that I can't verify this. If y"
+        }
+      ]
+    }
+  },
+  "dims": [
+    "analysis",
+    "anti-hallucination",
+    "careful-reading",
+    "coding",
+    "explanation",
+    "instruction",
+    "reasoning"
+  ],
+  "tiers": [
+    "core",
+    "hard"
+  ],
+  "wall_s": 120.9
+}

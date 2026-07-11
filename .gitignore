@@ -7,6 +7,9 @@ usage.jsonl
 active_session.json
 self_repair_backups/
 
+# local benchmark config holds absolute per-user paths
+bench/bench.local.json
+
 # python
 __pycache__/
 *.pyc

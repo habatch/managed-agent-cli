@@ -1,0 +1,25 @@
+{
+  "_comment": "Parity benchmark config. Each agent is a `cmd` backend (run any CLI that takes the prompt as its final argv and prints the answer) or an `api` backend (call the Anthropic API directly). {PROMPT} is replaced with the task prompt. Point --ref at your reference agent's name.",
+  "judge_model": "claude-opus-4-8",
+  "agents": [
+    {
+      "name": "my-agent",
+      "backend": "cmd",
+      "cmd": ["habatch", "--new", "--no-memory", "{PROMPT}"],
+      "env": {"HABATCH_SKIP_PASSPHRASE": "1"},
+      "timeout": 240
+    },
+    {
+      "name": "raw-sonnet",
+      "backend": "api",
+      "model": "claude-sonnet-4-6",
+      "max_tokens": 2048
+    },
+    {
+      "name": "reference",
+      "backend": "api",
+      "model": "claude-opus-4-8",
+      "max_tokens": 2048
+    }
+  ]
+}

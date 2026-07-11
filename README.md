@@ -175,6 +175,25 @@ search/replace plan; the **client** applies it under a guarded pipeline:
 
 Edit matching is exact first, then whitespace-tolerant on unique line-blocks.
 
+## Benchmark — is my agent as good as a reference model?
+
+`bench/` is a self-contained parity harness. It runs the same task suite (two
+difficulty tiers across seven dimensions: reasoning, careful-reading,
+instruction-following, coding, anti-hallucination, explanation, analysis)
+against any number of agents and prints a per-dimension scorecard with cost and
+latency. Objective tasks are graded by deterministic Python; open-ended ones by
+a blind LLM judge.
+
+```bash
+python -m bench.test_graders                                  # verify graders (no API key)
+python -m bench.run --config bench/bench.example.json --repeats 2 --ref reference
+```
+
+Point one `cmd` agent at *your* CLI and one `api` agent at a reference model to
+see, side by side, both the model-tier gap and what your scaffolding adds over
+the bare base model. See [`bench/README.md`](bench/README.md) for the full guide
+and [`bench/RESULTS.md`](bench/RESULTS.md) for a worked reference run.
+
 ## Files
 
 ```
@@ -187,6 +206,7 @@ managed-agent-cli/
 ├── bin/agent.template        # launcher template (placeholders filled by install.sh)
 ├── config.example.json       # config reference
 ├── system_prompt.example.md  # default system prompt
+├── bench/                     # parity benchmark (run.py, tasks.py, judge.py, agents.py, tests)
 └── requirements.txt
 ```
 
