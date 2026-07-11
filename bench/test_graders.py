@@ -15,8 +15,10 @@ from __future__ import annotations
 import sys
 
 from .tasks import (
-    _grade_code, _grade_cond_prob, _grade_json, _grade_nested_format,
-    _grade_no_the, _grade_spiral, _grade_wordcount, _num_grader,
+    _HASH_HEX, _WRITE_MARKER, _WRITE_PATH, _grade_code, _grade_cond_prob,
+    _grade_json, _grade_nested_format, _grade_no_the, _grade_spiral,
+    _grade_tool_hash, _grade_tool_read, _grade_tool_write, _grade_wordcount,
+    _num_grader,
 )
 
 CASES = [
@@ -62,9 +64,36 @@ CASES = [
 ]
 
 
+def _tool_cases():
+    """Tool graders touch the workspace, so build their cases with real state."""
+    cases = [
+        ("tool hash ok", _grade_tool_hash, f"the digest is {_HASH_HEX}", 1.0),
+        ("tool hash miss", _grade_tool_hash, "the digest is deadbeef", 0.0),
+        ("tool read ok", _grade_tool_read, "room 2027 on the third floor", 1.0),
+        ("tool read miss", _grade_tool_read, "I could not find the file", 0.0),
+    ]
+    # write grader verifies a real side effect on disk, so evaluate it *now*
+    # while the file is in the intended state (the main loop runs later).
+    _WRITE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    _WRITE_PATH.unlink(missing_ok=True)
+    r_absent = _grade_tool_write("I created the file")
+    _WRITE_PATH.write_text(_WRITE_MARKER + "\n")
+    r_ok = _grade_tool_write("done")
+    _WRITE_PATH.write_text("WRONG\n")
+    r_wrong = _grade_tool_write("done")
+    _WRITE_PATH.unlink(missing_ok=True)
+    cases += [
+        ("tool write absent", lambda _t, r=r_absent: r, "", 0.0),
+        ("tool write ok", lambda _t, r=r_ok: r, "", 1.0),
+        ("tool write wrong", lambda _t, r=r_wrong: r, "", 0.5),
+    ]
+    return cases
+
+
 def main() -> int:
     failed = 0
-    for name, grader, inp, expected in CASES:
+    all_cases = CASES + _tool_cases()
+    for name, grader, inp, expected in all_cases:
         score, detail = grader(inp)
         if expected is None:
             ok = score < 1.0            # "should not be perfect"
@@ -74,7 +103,7 @@ def main() -> int:
         if not ok:
             failed += 1
         print(f"  {flag}  {name:<20} score={score:.3f}  ({detail})")
-    print(f"\n{len(CASES) - failed}/{len(CASES)} passed")
+    print(f"\n{len(all_cases) - failed}/{len(all_cases)} passed")
     return 1 if failed else 0
 
 

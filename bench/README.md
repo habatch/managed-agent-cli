@@ -26,6 +26,12 @@ Two tiers of tasks across seven dimensions:
 - **hard tier** — chosen to separate a Sonnet-class model from an Opus-class
   one. If your agent matches the reference *here* too, it has genuinely closed
   the gap, not just aced the easy questions.
+- **tools tier** — checks the *scaffolding's tool layer*, not raw model ability:
+  does the agent actually invoke a tool and act on the real result? Graders
+  verify an un-guessable value (a SHA-256 the model can't compute in its head)
+  or a real side effect on disk, so an agent that fabricates "done" scores 0.
+  Only runs for tool-capable `cmd` agents (bare `api` agents have no tools), so
+  it is **opt-in**: run it with `--only tools` (see below).
 
 Objective tasks are graded by deterministic Python (numbers, JSON validity,
 word counts, executed code). Open-ended tasks are graded by an LLM judge that
@@ -60,6 +66,17 @@ python -m bench.run --config bench/bench.example.json --repeats 2 --ref referenc
 Useful flags: `--only reasoning` (one dimension or task id), `--repeats N`
 (median over N runs to cut variance), `--max-workers N` (parallelism),
 `--out results.json`.
+
+To exercise the tool layer (writes/reads files in a temp workspace on the
+machine your `cmd` agent runs on):
+
+```bash
+python -m bench.run --config bench/bench.example.json --only tools \
+       --repeats 1 --max-workers 1 --ref my-agent
+```
+
+Run tools sequentially (`--max-workers 1`) so the write-probe's side effect is
+not raced by a parallel repeat.
 
 ### Config
 

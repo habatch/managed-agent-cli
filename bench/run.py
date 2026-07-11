@@ -62,14 +62,20 @@ def run(config_path: str, repeats: int, only: str | None, max_workers: int) -> d
     agents = [build_agent(a) for a in cfg["agents"]]
     judge_model = cfg.get("judge_model", "claude-opus-4-8")
     tasks = [t for t in TASKS if not only or t.dim == only or t.id == only]
+    # The tools tier needs a tool-capable agent, so it is opt-in: excluded from
+    # the default run, included only when --only explicitly targets it.
+    if not only:
+        tasks = [t for t in tasks if t.tier != "tools"]
     if not tasks:
         sys.exit(f"no tasks match --only {only!r}")
 
     needs_judge = any(t.kind == "judge" for t in tasks)
     judge = Judge(judge_model) if needs_judge else None
 
-    # Build the full work list: (agent, task, repeat_index).
-    jobs = [(ag, t, r) for ag in agents for t in tasks for r in range(repeats)]
+    # Build the work list: (agent, task, repeat_index). Tool tasks require a
+    # tool-capable (cmd) agent; skip them for bare api agents.
+    jobs = [(ag, t, r) for ag in agents for t in tasks for r in range(repeats)
+            if not (t.tier == "tools" and not isinstance(ag, CmdAgent))]
     print(f"Running {len(tasks)} tasks x {repeats} repeats x {len(agents)} agents "
           f"= {len(jobs)} calls (up to {max_workers} in parallel)\n", flush=True)
 
@@ -77,6 +83,8 @@ def run(config_path: str, repeats: int, only: str | None, max_workers: int) -> d
 
     def do(job):
         ag, task, r = job
+        if task.setup:
+            task.setup()
         res = ag.ask(task.prompt)
         if not res.ok:
             return ag.name, task, 0.0, f"[error] {res.error}", res

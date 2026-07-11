@@ -54,6 +54,57 @@ Either Sonnet arm vs `ref-opus48` measures **the model-tier gap**.
    Opus reference (\$0.54 vs \$0.61) for essentially the same score, at the price
    of ~3× latency (tool use + a larger cached system prompt).
 
+## Tool layer (SDK scaffolding check, `--only tools`)
+
+The parity suite above is text-in/text-out, so it barely exercises the tools
+that are most of the SDK's value. A separate tools tier probes them directly,
+with graders that verify an un-guessable value or a real side effect on disk.
+Run against habatchLM (Sonnet 4.6 + local tools), 2 repeats each:
+
+| probe | what it checks | score |
+|---|---|---|
+| `tool_bash_hash` | run a shell command and report a SHA-256 the model can't guess | **1.00** |
+| `tool_local_write` | create a file on the local machine with exact contents | **1.00** |
+| `tool_bash_read` | read a planted local file and report its content | **0.00** |
+
+**Finding — the agent has two shell surfaces and defaults to the wrong one.**
+`tool_bash_read` failed not because the model is weak but because it ran the
+request in the **cloud sandbox** (`agent_toolset`'s server-side `bash`, whose
+filesystem is isolated) instead of the CLI's client-side `local_bash`. The
+planted file existed on the local disk (`room 2027`), but the sandbox reported
+"file does not exist" and even suggested `/mnt/session/uploads/` — a sandbox
+path. Re-issuing the exact same request with "use your `local_bash` tool (my
+actual machine, not the sandbox)" made it use `local_bash` and read `2027`
+correctly. So:
+
+- `local_bash` / `local_write` **work end-to-end** (SHA-256 and the file-write
+  probe both passed).
+- But for an *ambiguous* file request the agent prefers the cloud sandbox, so an
+  operation the user expects on their own machine can silently hit the wrong
+  filesystem. The deployed system prompt already lists both tool surfaces, but a
+  passive lookup table isn't enough — it needs an active default-to-local rule.
+
+**Also observed:** on a softly-phrased write ("using your file-writing tool,
+create…") the model once claimed "written, verified" *without calling any tool*
+— a fabricated tool result. An explicit "actually perform the write" made it
+call `local_write` reliably. Both point at the same fix (below), not at a broken
+tool.
+
+**Also good:** asked to read a file named `secret_probe.txt` and report the
+"token", the agent **refused**, correctly flagging it as a possible
+exfiltration / prompt-injection test — the safety guardrails work.
+
+### Recommended fix (not yet applied to the deployed agent)
+
+Strengthen `system_prompt.md` from a passive tool table to an active rule:
+*any path on the user's machine (home / `/tmp` / `/mnt`, "my machine",
+"locally") MUST use `local_bash`/`local_write`; the cloud sandbox is only for
+throwaway computation; never report a sandbox file op as if it happened on the
+user's machine; never claim a tool ran without actually calling it.* This ships
+in `system_prompt.example.md` already. Applying it to habatchLM means editing its
+`system_prompt.md` and re-running `setup.py` (which re-provisions the cloud agent
+to a new version) — a deliberate action, left to the operator.
+
 ## The benchmark fixed itself first
 
 The first run reported spurious gaps that were framework bugs, not model

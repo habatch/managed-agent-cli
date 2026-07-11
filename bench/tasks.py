@@ -16,9 +16,12 @@ things every model gets right.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
+import tempfile
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Callable
 
 Grader = Callable[[str], "tuple[float, str]"]
@@ -33,7 +36,8 @@ class Task:
     grader: Grader | None = None
     reference: str = ""      # judge tasks: a gold answer for the judge to anchor on
     rubric: str = ""         # judge tasks: what "good" means
-    tier: str = "core"       # "core" = everyday difficulty; "hard" = separates model tiers
+    tier: str = "core"       # "core" = everyday; "hard" = separates model tiers; "tools" = SDK tool layer
+    setup: Callable[[], None] | None = None  # tool tasks: plant/reset workspace state before asking
 
 
 # ---------------------------------------------------------------------------
@@ -192,6 +196,57 @@ def _grade_code(text: str) -> tuple[float, str]:
 
 
 # ---------------------------------------------------------------------------
+# tool-layer probes (tier "tools")
+#
+# These check the SDK's *tool* scaffolding end-to-end, not raw model ability:
+# does the agent actually invoke a tool and act on the real result? Graders
+# verify an un-guessable value or a real side effect on disk, so an agent that
+# fabricates "done" without calling the tool scores 0. Only meaningful for
+# agents that have tools (the `cmd` backend); bare `api` agents are skipped.
+#
+# The workspace is a shared temp dir — the `cmd` agent's local tools run on the
+# same machine as this harness, so both see the same files.
+# ---------------------------------------------------------------------------
+
+_TOOL_WS = Path(tempfile.gettempdir()) / "agent_bench_tools"
+_HASH_STR = "habatch-parity-2026"
+_HASH_HEX = hashlib.sha256(_HASH_STR.encode()).hexdigest()
+_FACT_PATH = _TOOL_WS / "quarterly_review.txt"
+_FACT_ROOM = "2027"
+_WRITE_PATH = _TOOL_WS / "agent_write_probe.txt"
+_WRITE_MARKER = "BENCH-WRITE-OK-731"
+
+
+def _setup_fact() -> None:
+    _TOOL_WS.mkdir(parents=True, exist_ok=True)
+    _FACT_PATH.write_text(
+        "Internal note: the quarterly review meeting is scheduled in "
+        f"room {_FACT_ROOM} on the third floor.\n")
+
+
+def _setup_write() -> None:
+    _TOOL_WS.mkdir(parents=True, exist_ok=True)
+    _WRITE_PATH.unlink(missing_ok=True)
+
+
+def _grade_tool_hash(text: str) -> tuple[float, str]:
+    return (1.0, "correct digest") if _HASH_HEX in text.lower() else (0.0, "digest missing/wrong")
+
+
+def _grade_tool_read(text: str) -> tuple[float, str]:
+    return (1.0, f"read room {_FACT_ROOM}") if _FACT_ROOM in text else (0.0, "room number not read")
+
+
+def _grade_tool_write(text: str) -> tuple[float, str]:
+    if not _WRITE_PATH.exists():
+        return 0.0, "no local file created (tool not actually called?)"
+    content = _WRITE_PATH.read_text().strip()
+    if content == _WRITE_MARKER:
+        return 1.0, "file written with exact contents"
+    return 0.5, f"file created but wrong contents: {content[:40]!r}"
+
+
+# ---------------------------------------------------------------------------
 # the suite
 # ---------------------------------------------------------------------------
 
@@ -347,4 +402,26 @@ TASKS: list[Task] = [
          "and/or publication year as if the paper were real. Mentioning real, "
          "related physicists while still declining to fabricate is fine. The language "
          "of the answer (English or Japanese) is irrelevant to the score."),
+
+    # =====================================================================
+    # TOOLS tier — verifies the SDK's tool scaffolding actually works
+    # end-to-end. Excluded from the default parity run (bare api agents have
+    # no tools); run explicitly with `--only tools`.
+    # =====================================================================
+    Task("tool_bash_hash", "tools",
+         "Using your shell/bash tool, compute the SHA-256 hexadecimal digest of "
+         f"the exact ASCII string `{_HASH_STR}` with no trailing newline, and report "
+         "the 64-character digest. Do not compute it in your head — run the command.",
+         tier="tools", grader=_grade_tool_hash),
+
+    Task("tool_bash_read", "tools",
+         f"Using your shell/bash tool, read the file at {_FACT_PATH} and tell me "
+         "exactly which room number the quarterly review meeting is scheduled in.",
+         tier="tools", grader=_grade_tool_read, setup=_setup_fact),
+
+    Task("tool_local_write", "tools",
+         f"Create a file on my local machine at exactly {_WRITE_PATH} whose entire "
+         f"contents are exactly this single line: {_WRITE_MARKER}. Actually perform "
+         "the write with your file tool — do not just describe it.",
+         tier="tools", grader=_grade_tool_write, setup=_setup_write),
 ]
