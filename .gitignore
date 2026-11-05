@@ -15,3 +15,6 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# Obsidian 自身の設定
+vault/.obsidian/
